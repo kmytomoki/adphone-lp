@@ -86,7 +86,7 @@ export default function UseCasesPage() {
   return (
     <main className="flex-1">
       <PageHero
-        eyebrow="USE CASES"
+        eyebrow="活用例"
         title="立場と現場から、ADRENの使い方を確認する"
         lede="県・自治体、企業の防災・BCP、防災事業の共創に分け、通信断時に想定する課題・対応・効果を整理しています。"
       />
@@ -118,7 +118,7 @@ export default function UseCasesPage() {
       <section id="municipality" className="scroll-mt-24 px-6 pb-20 md:px-12">
         <div className="mx-auto max-w-6xl space-y-6">
           <div className="max-w-3xl pb-4">
-            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">FOR GOVERNMENT</p>
+            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">県・自治体</p>
             <h2 className="mincho text-3xl md:text-4xl">県・自治体の防災</h2>
             <p className="mt-3 text-body text-ink-soft">
               避難所、孤立地域、災害対策本部の間で、安否・物資・危険情報を継続して共有する想定です。
@@ -130,20 +130,15 @@ export default function UseCasesPage() {
               className="hover-card grid gap-6 border border-line-soft bg-white p-6 md:grid-cols-2 md:p-8"
             >
               <div className={index % 2 === 0 ? "order-1" : "order-2 md:order-1"}>
-                <p className="mono mb-2 text-micro tracking-[0.2em] text-brand-accent">SCENARIO 0{index + 1}</p>
-                <h3 className="mincho mb-4 text-3xl">{item.title}</h3>
-                <div className="space-y-3">
+                <h3 className="mincho mb-4 text-3xl">{item.title}</h3>                <div className="space-y-3">
                   <div className="border-l-2 border-ink bg-paper-2 p-3">
-                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft uppercase">課題</p>
-                    <p className="text-body text-ink-soft">{item.problem}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">課題</p>                    <p className="text-body text-ink-soft">{item.problem}</p>
                   </div>
                   <div className="border-l-2 border-brand-accent bg-paper p-3">
-                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft uppercase">解決</p>
-                    <p className="text-body text-ink-soft">{item.solution}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">解決</p>                    <p className="text-body text-ink-soft">{item.solution}</p>
                   </div>
                   <div className="border-l-2 border-line bg-white p-3">
-                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft uppercase">効果</p>
-                    <p className="text-body text-ink-soft">{item.effect}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">効果</p>                    <p className="text-body text-ink-soft">{item.effect}</p>
                   </div>
                 </div>
               </div>
@@ -173,20 +168,16 @@ export default function UseCasesPage() {
       <section id="enterprise" className="scroll-mt-24 border-y border-line-soft bg-paper-2 px-6 py-20 md:px-12">
         <div className="mx-auto max-w-6xl">
           <div className="max-w-3xl">
-            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">FOR ENTERPRISE</p>
+            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">企業の防災・BCP</p>
             <h2 className="mincho text-3xl md:text-4xl">企業の防災・BCP</h2>
             <p className="mt-3 text-body text-ink-soft">
               工場・事業所・店舗で、インターネット前提の連絡手段が使えない時間帯を補完する想定です。
             </p>
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {enterpriseScenarios.map((item, index) => (
+            {enterpriseScenarios.map((item) => (
               <article key={item.title} className="border border-line-soft bg-white p-6">
-                <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">
-                  BCP SCENARIO 0{index + 1}
-                </p>
-                <h3 className="mincho text-2xl">{item.title}</h3>
-                <dl className="mt-5 space-y-4">
+                <h3 className="mincho text-2xl">{item.title}</h3>                <dl className="mt-5 space-y-4">
                   <div>
                     <dt className="text-base font-medium text-ink">通信断時の課題</dt>
                     <dd className="mt-1 text-body text-ink-soft">{item.problem}</dd>
@@ -215,18 +206,16 @@ export default function UseCasesPage() {
       <section id="partners" className="scroll-mt-24 px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <div className="max-w-3xl">
-            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">FOR PARTNERS</p>
+            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">共創・事業連携</p>
             <h2 className="mincho text-3xl md:text-4xl">共創・事業連携</h2>
             <p className="mt-3 text-body text-ink-soft">
               ADREN単体の導入だけでなく、既存の顧客基盤・防災サービス・通信機器を組み合わせる事業開発を想定しています。
             </p>
           </div>
           <div className="mt-8 grid gap-px border border-line bg-line md:grid-cols-3">
-            {partnerScenarios.map((item, index) => (
+            {partnerScenarios.map((item) => (
               <article key={item.title} className="bg-white p-7">
-                <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent">CO-CREATION 0{index + 1}</p>
-                <h3 className="mincho text-2xl">{item.title}</h3>
-                <p className="mt-3 text-body text-ink-soft">{item.body}</p>
+                <h3 className="mincho text-2xl">{item.title}</h3>                <p className="mt-3 text-body text-ink-soft">{item.body}</p>
               </article>
             ))}
           </div>

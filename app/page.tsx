@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArchSvg } from "@/components/site/ArchSvg";
 import { FinalCta } from "@/components/site/FinalCta";
 import { GhostButton, PrimaryButton } from "@/components/site/Buttons";
 import { SectionHead } from "@/components/site/SectionHead";
-import { AUDIENCE_OPTIONS, contactHref } from "@/lib/site";
+import { AUDIENCE_OPTIONS, TRUST_AWARDS, contactHref } from "@/lib/site";
 
 const existingSystems = [
   {
@@ -94,9 +95,9 @@ export default function Home() {
 
         <div className="relative mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.3fr_1fr] md:items-center">
           <div>
-            <p className="fade-up mono mb-6 flex items-center gap-3 text-micro tracking-[0.25em] text-brand-accent uppercase">
+            <p className="fade-up mono mb-6 flex items-center gap-3 text-micro tracking-[0.25em] text-brand-accent">
               <span className="inline-block h-px w-8 bg-brand-accent" />
-              DISASTER COMMUNICATION SYSTEM
+              災害時通信システム
             </p>
             <h1 className="fade-up fade-up-1 mincho mb-8 text-4xl leading-tight md:text-6xl">
               通信が途絶えても、
@@ -118,7 +119,7 @@ export default function Home() {
             aria-labelledby="audience-heading"
             className="fade-up fade-up-4 frame-ticks border border-line-soft bg-white p-6 shadow-[8px_8px_0_0_rgba(26,31,46,0.06)] md:p-8"
           >
-            <p className="mono mb-2 text-micro tracking-[0.2em] text-brand-accent">YOUR ROLE</p>
+            <p className="mono mb-2 text-micro tracking-[0.2em] text-brand-accent">立場から</p>
             <h2 id="audience-heading" className="mincho mb-2 text-2xl">
               立場から探す
             </h2>
@@ -149,7 +150,7 @@ export default function Home() {
       <section className="px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
-            label="PROBLEM"
+            label="課題"
             title={
               <>
                 災害時、
@@ -173,12 +174,8 @@ export default function Home() {
                 "発災後72時間は人命救助の分岐点",
                 "72時間の壁を越える前に、現場状況を確実に届ける必要がある。通信断の時間は、そのまま救助可能性の低下につながる。",
               ],
-            ].map(([title, body], index) => (
+            ].map(([title, body]) => (
               <article key={title} className="hover-card hover-card-accent border border-line-soft bg-white p-7">
-                <p className="mono mb-5 flex items-baseline justify-between text-micro tracking-[0.2em] text-brand-accent">
-                  PROBLEM 0{index + 1}
-                  <span className="mincho text-4xl leading-none text-line">0{index + 1}</span>
-                </p>
                 <h3 className="mincho mb-4 text-xl leading-snug">{title}</h3>
                 <p className="text-body text-ink-soft">{body}</p>
               </article>
@@ -195,7 +192,7 @@ export default function Home() {
         <div className="relative mx-auto max-w-6xl">
           <SectionHead
             dark
-            label="SOLUTION"
+            label="解決策"
             title={
               <>
                 回線に依存しない、
@@ -218,7 +215,7 @@ export default function Home() {
       <section className="px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
-            label="ROLE WITH EXISTING SYSTEMS"
+            label="既存手段との関係"
             title={
               <>
                 置き換えず、
@@ -253,7 +250,7 @@ export default function Home() {
       <section className="px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
-            label="FEATURES"
+            label="特長"
             title={
               <>
                 災害対応を、
@@ -281,12 +278,8 @@ export default function Home() {
                 "信頼度スコアで情報の真偽を選別",
                 "新しい情報ほど重みを高くする時間減衰と、公式機関か一般投稿かによる発信者重みでスコア化。類似する情報は統合し、大きく乖離した情報は分離して表示します。",
               ],
-            ].map(([feature, body], index) => (
+            ].map(([feature, body]) => (
               <article key={feature} className="group bg-paper p-8 transition-colors duration-300 hover:bg-white">
-                <p className="mono mb-3 flex items-center gap-3 text-micro tracking-[0.2em] text-brand-accent">
-                  F.0{index + 1}
-                  <span className="inline-block h-px w-0 bg-brand-accent transition-all duration-300 group-hover:w-8" />
-                </p>
                 <h3 className="mincho mb-3 text-2xl">{feature}</h3>
                 <p className="text-body text-ink-soft">{body}</p>
               </article>
@@ -298,7 +291,7 @@ export default function Home() {
       <section className="border-y border-line-soft bg-paper-2 px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
-            label="IMPLEMENTATION"
+            label="導入の進め方"
             title={
               <>
                 小さく確かめ、
@@ -311,7 +304,7 @@ export default function Home() {
           <ol className="mt-10 grid gap-4 md:grid-cols-3">
             {implementationSteps.map((step, index) => (
               <li key={step.title} className="frame-ticks border border-line-soft bg-white p-7">
-                <p className="mono text-micro tracking-[0.2em] text-brand-accent">STEP 0{index + 1}</p>
+                <p className="mono text-micro tracking-[0.2em] text-brand-accent">ステップ {index + 1}</p>
                 <h3 className="mincho mt-3 text-2xl">{step.title}</h3>
                 <p className="mt-3 text-body text-ink-soft">{step.body}</p>
                 <div className="mt-5 border-t border-line-soft pt-4">
@@ -324,10 +317,93 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-y border-line-soft bg-paper px-6 py-20 md:px-12 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead
+            label="開発と実証"
+            title={
+              <>
+                現場で検証を重ね、
+                <em className="not-italic text-brand-accent">公開できる範囲</em>で示す。
+              </>
+            }
+            lede="沖縄工業高等専門学校発のチームが、プロトタイプの実装・屋外実験・コンテスト評価を積み重ねています。数値や受賞内容は主催者発表に基づき、裏取りできる形で掲載しています。"
+          />
+          <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+            <div>
+              <div className="relative aspect-[883/554] overflow-hidden border border-line-soft bg-paper">
+                <Image
+                  src="/images/team-okinawa.webp"
+                  alt="沖縄工業高等専門学校の正門前に並ぶチームRewaveのメンバー"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 560px"
+                  className="object-cover"
+                />
+              </div>
+              <p className="mt-2 text-micro text-ink-soft">沖縄工業高等専門学校にて</p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                {
+                  src: "/images/device.webp",
+                  alt: "ADREN本体（通信モジュール）の外観",
+                  note: "通信モジュール本体",
+                },
+                {
+                  src: "/images/app-map.webp",
+                  alt: "ADRENアプリのオフライン地図画面",
+                  note: "オフライン地図（実画面）",
+                },
+                {
+                  src: "/images/app-route.webp",
+                  alt: "ADRENアプリの避難ルート案内画面",
+                  note: "避難ルート案内（実画面）",
+                },
+              ].map((item) => (
+                <figure key={item.src} className="border border-line-soft bg-white p-3">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-paper">
+                    <Image src={item.src} alt={item.alt} fill sizes="280px" className="object-cover" />
+                  </div>
+                  <figcaption className="mt-2 text-micro text-ink-soft">{item.note}</figcaption>
+                </figure>
+              ))}
+              <article className="flex flex-col justify-center border border-line-soft bg-white p-5">
+                <p className="text-base font-medium text-ink">現在の段階</p>
+                <p className="mt-2 text-body text-ink-soft">
+                  開発中のプロトタイプです。屋外実験で1km以上の通信を確認していますが、第三者検証は未実施です。
+                </p>
+                <Link
+                  href="/about"
+                  className="mt-4 inline-flex min-h-11 items-center text-base font-medium text-brand-accent underline underline-offset-4 hover:text-ink"
+                >
+                  会社情報・沿革を見る →
+                </Link>
+              </article>
+            </div>
+          </div>
+          <ul className="mt-8 grid gap-4 md:grid-cols-3">
+            {TRUST_AWARDS.map((award) => (
+              <li key={award.title} className="border border-line-soft bg-white p-5">
+                <p className="mono text-micro tracking-[0.15em] text-brand-accent">{award.year}</p>
+                <p className="mincho mt-2 text-xl">{award.title}</p>
+                <a
+                  href={award.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mono mt-3 inline-block text-micro tracking-[0.15em] text-ink-soft underline underline-offset-4 hover:text-brand-accent"
+                >
+                  主催者発表ページ ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <section className="px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
-            label="FAQ"
+            label="よくある質問"
             title="導入検討で、よくある質問。"
             lede="現段階でお伝えできる範囲を明確にしています。利用環境により変わる内容は、実証前に個別確認します。"
           />

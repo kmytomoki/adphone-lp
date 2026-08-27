@@ -19,8 +19,7 @@ export function SectionHead({ label, title, lede, dark, className }: SectionHead
       <div>
         <p
           className={cn(
-            "mono mb-4 flex items-center gap-3 text-micro tracking-[0.25em] uppercase",
-            dark ? "text-brand-accent-soft" : "text-brand-accent"
+            "mono mb-4 flex items-center gap-3 text-micro tracking-[0.25em]",            dark ? "text-brand-accent-soft" : "text-brand-accent"
           )}
         >
           <span className={cn("inline-block h-px w-6", dark ? "bg-brand-accent-soft" : "bg-brand-accent")} />

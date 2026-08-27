@@ -43,15 +43,14 @@ export default function ProductPage() {
   return (
     <main className="flex-1">
       <PageHero
-        eyebrow="PRODUCT"
+        eyebrow="製品"
         title="スマホを活かして通信を復活させる、ADREN"
         lede="ADRENはスマートフォンとBLEで接続する通信モジュールです。基地局停止時にも、LPWAで端末から端末へ現場情報を中継します。"
       />
 
       <section className="px-6 py-14 md:px-12">
         <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-8 text-center md:p-16">
-          <p className="mono mb-3 text-micro tracking-[0.2em] text-ink-soft">PRODUCT VISUAL</p>
-          <p className="mx-auto mb-6 max-w-3xl text-body text-ink-soft">
+          <p className="mono mb-3 text-micro tracking-[0.2em] text-ink-soft">製品イメージ</p>          <p className="mx-auto mb-6 max-w-3xl text-body text-ink-soft">
             スマートフォンにADRENを接続し、近距離はBLE、遠距離はLoRaで中継。通信が切れた現場でも、手元のスマートフォンを災害時の通信端末として活用できます。
           </p>
           <div className="relative mx-auto aspect-[3/2] w-full max-w-4xl overflow-hidden border border-line-soft bg-paper">

@@ -56,15 +56,15 @@ export default async function ContactPage({
   const formEnabled = Boolean(process.env.CONTACT_FORM_ENDPOINT);
 
   const details = [
-    { label: "EMAIL", value: publicContact.email, href: `mailto:${publicContact.email}` },
-    { label: "PHONE", value: publicContact.phone, href: `tel:${publicContact.phone}` },
-    { label: "ADDRESS", value: publicContact.address, href: null },
+    { label: "メール", value: publicContact.email, href: `mailto:${publicContact.email}` },
+    { label: "電話", value: publicContact.phone, href: `tel:${publicContact.phone}` },
+    { label: "所在地", value: publicContact.address, href: null },
   ].filter((detail) => Boolean(detail.value));
 
   return (
     <main className="flex-1">
       <PageHero
-        eyebrow="CONTACT"
+        eyebrow="お問い合わせ"
         title="導入検討・技術相談の窓口"
         lede="県・自治体、企業の防災・BCP、防災事業の共創まで。資料を読む導線と、担当者へ相談する導線を分けています。"
       />

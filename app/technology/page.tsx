@@ -14,15 +14,14 @@ export default function TechnologyPage() {
   return (
     <main className="flex-1">
       <PageHero
-        eyebrow="TECHNOLOGY"
+        eyebrow="技術"
         title="実装可能性と運用性を両立した技術構成"
         lede="オンライン時の拡張性と、オフライン時の継続運用を両立するために、通信・保存・AI推論を役割分離して設計しています。"
       />
 
       <section className="px-6 py-14 md:px-12">
         <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-4 md:p-8">
-          <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft uppercase">SYSTEM ARCHITECTURE</h2>
-          <p className="mb-6 text-body text-ink-soft">
+          <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft">システム構成</h2>          <p className="mb-6 text-body text-ink-soft">
             ADREN (ESP32 / LoRa) がスマホとBLEで接続し、端末同士はLoRaでアドホック中継。必要に応じて5Gへブリッジし、通信断環境でも情報流通を維持します。
           </p>
           <ArchSvg />
@@ -33,18 +32,17 @@ export default function TechnologyPage() {
         <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
           {[
             [
-              "APP",
+              "アプリ",
               "React Native (Expo)",
               "現場で扱いやすいクロスプラットフォームUIを短サイクルで改善可能。チャット・地図・カメラを一体提供。",
             ],
             [
-              "DATA",
+              "データ",
               "Firebase + SQLite",
               "平時/オンライン時はFirebaseで同期、災害時/オフライン時はSQLiteで継続運用。通信復帰後に再同期しやすい構成。",
             ],
             [
-              "AI",
-              "YOLOv11 + 軽量化モデル",
+              "AI",              "YOLOv11 + 軽量化モデル",
               "被害画像から崩壊度や対象物を抽出。軽量化モデルで端末処理を可能にし、低帯域でも扱える情報へ圧縮。",
             ],
           ].map(([label, title, text]) => (
@@ -59,10 +57,9 @@ export default function TechnologyPage() {
 
       <section className="px-6 pb-14 md:px-12">
         <div className="mx-auto max-w-6xl border border-line-soft bg-white">
-          <h2 className="mono border-b border-line-soft px-6 py-4 text-micro tracking-[0.2em] text-ink-soft uppercase">
-            SECURITY & UNIQUENESS
-          </h2>
-          <p className="border-b border-line-soft px-6 py-4 text-body text-ink-soft">
+          <h2 className="mono border-b border-line-soft px-6 py-4 text-micro tracking-[0.2em] text-ink-soft">
+            セキュリティと独自性
+          </h2>          <p className="border-b border-line-soft px-6 py-4 text-body text-ink-soft">
             以下の暗号処理は LPWA (LoRa) 中継区間に実装しています。ノード起動時に鍵ペアを生成し、
             公開鍵を配布したうえで、ペアごとに導出した共通鍵で通信します。
           </p>
@@ -72,24 +69,20 @@ export default function TechnologyPage() {
             "Ed25519 による送信者認証・なりすまし防止",
             "信頼度スコアに基づく情報統合・フェイク情報の抑制",
             "圧縮・軽量化したAI推論による低帯域向け最適化",
-          ].map((paper, index) => (
+          ].map((paper) => (
             <div
               key={paper}
-              className="grid gap-3 border-b border-line-soft px-6 py-4 transition-colors duration-200 last:border-b-0 hover:bg-paper md:grid-cols-[100px_1fr_90px] md:items-center"
+              className="border-b border-line-soft px-6 py-4 transition-colors duration-200 last:border-b-0 hover:bg-paper"
             >
-              <p className="mono text-micro tracking-[0.15em] text-ink-soft">POINT 0{index + 1}</p>
               <p className="text-body text-ink">{paper}</p>
-              <span className="mono text-micro tracking-[0.15em] text-brand-accent">TECH</span>
             </div>
-          ))}
-        </div>
+          ))}        </div>
       </section>
 
       <section className="px-6 pb-14 md:px-12">
         <div className="mx-auto max-w-6xl grid gap-4 md:grid-cols-2">
           <article className="hover-card border border-line-soft bg-white p-6">
-            <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft uppercase">TRUST SCORE ENGINE</h2>
-            <p className="mb-4 text-body text-ink-soft">
+            <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft">信頼度評価</h2>            <p className="mb-4 text-body text-ink-soft">
               複数の投稿を比較し、時間経過と発信者信頼度を加味してスコア化。明らかに乖離した情報は優先度を下げ、防災センターでの判断負荷を下げます。
             </p>
             <ul className="space-y-2 text-body text-ink-soft">
@@ -100,8 +93,7 @@ export default function TechnologyPage() {
           </article>
 
           <article className="hover-card border border-line-soft bg-white p-6">
-            <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft uppercase">OFFLINE MAP & ROUTING</h2>
-            <p className="mb-4 text-body text-ink-soft">
+            <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft">オフライン地図・経路探索</h2>            <p className="mb-4 text-body text-ink-soft">
               完全オフライン時でも、地図表示と避難ルート探索を継続します。A*探索をベースに、危険エリアを回避する運用ロジックを重ねています。
             </p>
             <ul className="space-y-2 text-body text-ink-soft">
@@ -115,8 +107,7 @@ export default function TechnologyPage() {
 
       <section className="px-6 pb-20 md:px-12">
         <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-4 md:p-8">
-          <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft uppercase">OKINAWA MESH DEMO</h2>
-          <OkinawaMeshMap nodeCount={80} edgeRadius={75} hopDelay={420} autoPlay />
+          <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft">沖縄メッシュ通信デモ</h2>          <OkinawaMeshMap nodeCount={80} edgeRadius={75} hopDelay={420} autoPlay />
         </div>
       </section>
 

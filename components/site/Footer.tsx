@@ -3,23 +3,20 @@ import Link from "next/link";
 // 実在するページだけを並べる。行き先の無い項目は置かない（ダミーリンクは信用を損なう）。
 const columns: { title: string; items: { label: string; href: string }[] }[] = [
   {
-    title: "Product",
-    items: [
+    title: "製品",    items: [
       { label: "製品概要", href: "/product" },
       { label: "技術構成", href: "/technology" },
       { label: "ユースケース", href: "/usecases" },
     ],
   },
   {
-    title: "Resources",
-    items: [
+    title: "資料",    items: [
       { label: "製品概要資料（登録不要）", href: "/document" },
       { label: "セキュリティ設計", href: "/technology" },
     ],
   },
   {
-    title: "Company",
-    items: [
+    title: "会社情報",    items: [
       { label: "会社情報・沿革", href: "/about" },
       { label: "導入・実証・共創のご相談", href: "/contact" },
       { label: "プライバシーポリシー", href: "/privacy" },
@@ -44,8 +41,7 @@ export function Footer() {
         </div>
         {columns.map((col) => (
           <div key={col.title}>
-            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent-soft uppercase">{col.title}</p>
-            <ul className="text-base text-white/75">
+            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent-soft">{col.title}</p>            <ul className="text-base text-white/75">
               {col.items.map((item) => (
                 <li key={item.label}>
                   <Link
@@ -63,8 +59,7 @@ export function Footer() {
       <div className="mx-auto mt-4 flex max-w-6xl flex-col gap-1 text-micro tracking-[0.15em] text-white/60 sm:flex-row sm:items-center sm:justify-between">
         <span className="flex min-h-11 items-center">© 2026 Rewave Technology</span>
         <Link href="/privacy" className="link-line flex min-h-11 items-center transition-colors hover:text-white">
-          PRIVACY POLICY
-        </Link>
+          プライバシーポリシー        </Link>
       </div>
     </footer>
   );

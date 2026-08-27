@@ -137,7 +137,7 @@ export default function PrivacyPage() {
   return (
     <main className="flex-1">
       <PageHero
-        eyebrow="PRIVACY"
+        eyebrow="プライバシー"
         title="プライバシーポリシー"
         lede="お問い合わせフォームでお預かりする情報の取り扱いについて記載しています。"
       />

@@ -42,7 +42,7 @@ const awards = [
 function Block({ label, title, children }: { label: string; title: string; children: React.ReactNode }) {
   return (
     <section className="break-inside-avoid border-t border-line pt-6">
-      <p className="mono mb-2 text-micro tracking-[0.2em] text-brand-accent uppercase">{label}</p>
+      <p className="mono mb-2 text-micro tracking-[0.2em] text-brand-accent">{label}</p>
       <h2 className="mincho mb-4 text-2xl">{title}</h2>
       {children}
     </section>
@@ -79,8 +79,7 @@ export default function DocumentPage() {
         </header>
 
         <div className="space-y-8">
-          <Block label="Problem" title="災害時、通信は真っ先に失われる">
-            <dl className="space-y-3">
+          <Block label="課題" title="災害時、通信は真っ先に失われる">            <dl className="space-y-3">
               {problems.map(([title, body]) => (
                 <div key={title} className="border-l-2 border-line pl-4">
                   <dt className="text-base font-semibold text-ink">{title}</dt>
@@ -90,16 +89,14 @@ export default function DocumentPage() {
             </dl>
           </Block>
 
-          <Block label="Solution" title="回線に依存しない、独立した通信レイヤー">
-            <p className="text-body text-ink-soft">
+          <Block label="解決策" title="回線に依存しない、独立した通信レイヤー">            <p className="text-body text-ink-soft">
               ADRENは、スマホとBLEで接続する小型通信モジュールです。近距離はBLE、遠距離はLPWA (LoRa
               920MHz)で中継し、ノード間をバケツリレー式に接続。基地局が使えない環境でも、情報を次のノードへ確実に届けます。
               オンライン時はFirebaseで同期し、オフライン時はSQLiteで継続運用します。
             </p>
           </Block>
 
-          <Block label="Features" title="災害対応を支える4つの特長">
-            <dl className="grid gap-4 sm:grid-cols-2">
+          <Block label="特長" title="災害対応を支える4つの特長">            <dl className="grid gap-4 sm:grid-cols-2">
               {features.map(([title, body]) => (
                 <div key={title} className="border border-line-soft bg-paper p-4">
                   <dt className="mincho mb-2 text-xl">{title}</dt>
@@ -109,8 +106,7 @@ export default function DocumentPage() {
             </dl>
           </Block>
 
-          <Block label="Specifications" title="仕様">
-            <div className="border border-line">
+          <Block label="仕様" title="仕様">            <div className="border border-line">
               {specs.map(([key, value]) => (
                 <div key={key} className="grid border-b border-line-soft last:border-b-0 sm:grid-cols-[220px_1fr]">
                   <div className="bg-paper-2 px-4 py-3 text-body text-ink">{key}</div>
@@ -123,8 +119,7 @@ export default function DocumentPage() {
             </p>
           </Block>
 
-          <Block label="Awards" title="受賞歴">
-            <ul className="space-y-2">
+          <Block label="受賞歴" title="受賞歴">            <ul className="space-y-2">
               {awards.map(([year, title, href]) => (
                 <li key={title} className="flex flex-wrap items-baseline gap-x-4 border-b border-line-soft pb-2">
                   <span className="mono text-micro tracking-[0.15em] text-brand-accent">{year}</span>
@@ -142,8 +137,7 @@ export default function DocumentPage() {
             </ul>
           </Block>
 
-          <Block label="Next Step" title="導入・実証・共創のご相談">
-            <p className="text-body text-ink-soft">
+          <Block label="次のステップ" title="導入・実証・共創のご相談">            <p className="text-body text-ink-soft">
               自治体・企業への導入、実証実験、既存防災システムとの連携、学校・避難所配備などの具体的なご相談は、
               サイトのお問い合わせフォームより承ります。数営業日以内に担当者よりご連絡いたします。
             </p>

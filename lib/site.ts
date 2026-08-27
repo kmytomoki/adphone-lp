@@ -28,26 +28,53 @@ export const CONTACT_SUBJECTS = [
 
 export type ContactSubject = (typeof CONTACT_SUBJECTS)[number];
 
-/** トップと相談ページで共用する、読み手別の入口。 */
+/** トップ・ナビ・相談ページで共用する、読み手別の入口。 */
 export const AUDIENCE_OPTIONS: readonly {
   label: string;
   description: string;
   subject: ContactSubject;
+  usecasesHref: string;
 }[] = [
   {
     label: "県・自治体の防災",
     description: "避難所と災害対策本部の情報伝達、孤立地域への備えを検討する方",
     subject: "県・自治体の導入相談",
+    usecasesHref: "/usecases#municipality",
   },
   {
     label: "企業の防災・BCP",
     description: "工場・事業所・店舗間の通信確保や従業員の安否確認を検討する方",
     subject: "企業の防災・BCP相談",
+    usecasesHref: "/usecases#enterprise",
   },
   {
     label: "共創・事業連携",
     description: "防災サービスとの連携、共同実証、技術提携を検討する企業の方",
     subject: "共創・事業連携",
+    usecasesHref: "/usecases#partners",
+  },
+];
+
+/** 会社情報ページと同じ受賞歴。主催者発表ページへのリンク必須。 */
+export const TRUST_AWARDS: readonly {
+  year: string;
+  title: string;
+  href: string;
+}[] = [
+  {
+    year: "2026.05",
+    title: "DCON2026 準優勝",
+    href: "https://dcon.ai/results/",
+  },
+  {
+    year: "2025.12",
+    title: "第4回高専防災減災コンテスト 最優秀賞",
+    href: "https://www.bosai.go.jp/kosencon/contest_2025.html",
+  },
+  {
+    year: "2026.02",
+    title: "第3回高専起業家サミット 最優秀賞",
+    href: "https://startup.gekkan-kosen.com/report/3rd_2025/",
   },
 ];
 

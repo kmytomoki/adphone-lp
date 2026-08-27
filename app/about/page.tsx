@@ -59,7 +59,7 @@ export default function AboutPage() {
   return (
     <main className="flex-1">
       <PageHero
-        eyebrow="ABOUT"
+        eyebrow="会社情報"
         title="Rewave: 高専生発の技術を社会実装へ"
         lede="私たちは沖縄工業高等専門学校のチーム Rewave。災害時の通信空白という社会課題に対し、研究・開発・実証を一体で進めています。"
       />
@@ -118,7 +118,7 @@ export default function AboutPage() {
               ["アプリ開発", "UX設計・オフライン機能実装"],
             ].map(([member, role]) => (
               <article key={member} className="hover-card border border-line-soft bg-white p-6">
-                <p className="mono mb-2 text-micro tracking-[0.15em] text-ink-soft">TEAM</p>
+                <p className="mono mb-2 text-micro tracking-[0.15em] text-ink-soft">チーム</p>
                 <h3 className="mincho text-xl">{member}</h3>
                 <p className="mt-2 text-body text-ink-soft">{role}</p>
               </article>
