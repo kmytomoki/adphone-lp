@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { FinalCta } from "@/components/site/FinalCta";
 import { PageHero } from "@/components/site/PageHero";
+
+export const metadata: Metadata = {
+  title: "Rewave Technologyについて",
+  description:
+    "災害時オフライン通信ADREN（アドレン）を開発する、沖縄工業高等専門学校発Rewave Technologyのミッション、チーム、受賞実績です。",
+};
 
 // 受賞歴には必ず主催者側の発表ページを添える。裏取りできる形にしておくことが信用に直結する。
 const timeline = [

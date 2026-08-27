@@ -1,7 +1,73 @@
+import Link from "next/link";
 import { ArchSvg } from "@/components/site/ArchSvg";
 import { FinalCta } from "@/components/site/FinalCta";
 import { GhostButton, PrimaryButton } from "@/components/site/Buttons";
 import { SectionHead } from "@/components/site/SectionHead";
+import { AUDIENCE_OPTIONS, contactHref } from "@/lib/site";
+
+const existingSystems = [
+  {
+    name: "防災行政無線",
+    role: "住民へ避難情報や警報を一斉に周知する",
+    complement: "周知後の避難所・現場・災害対策本部間で、個別情報を双方向に共有する",
+  },
+  {
+    name: "衛星電話",
+    role: "限られた拠点間で音声連絡を確保する",
+    complement: "複数のスマートフォンから安否・物資・危険情報を集め、端末間で中継する",
+  },
+  {
+    name: "安否確認サービス",
+    role: "インターネット接続時に従業員や関係者へ一斉確認する",
+    complement: "基地局が使えない時間帯に、事業所や現場の端末間通信を補完する",
+  },
+];
+
+const implementationSteps = [
+  {
+    title: "対象業務を決める",
+    body: "避難所間連絡、事業所の安否確認、既存システム連携など、通信を残したい業務と場所を整理します。",
+    output: "対象シナリオ・拠点・評価項目",
+  },
+  {
+    title: "小規模に実証する",
+    body: "数拠点で通信距離、建物や地形の影響、担当者の操作手順を確認し、導入判断に必要な記録を残します。",
+    output: "通信結果・運用課題・改善案",
+  },
+  {
+    title: "訓練と運用に組み込む",
+    body: "既存の防災訓練やBCP手順と接続し、保管、点検、担当交代を含む継続運用を設計します。",
+    output: "運用手順・訓練計画・配備案",
+  },
+];
+
+const faqs = [
+  {
+    question: "既存の防災行政無線や衛星電話を置き換える製品ですか？",
+    answer:
+      "置き換えを前提としていません。ADRENは、既存手段では集めにくい避難所・事業所・現場の個別情報を、通信断時にも端末間で届ける補完レイヤーです。",
+  },
+  {
+    question: "インターネットが完全に使えない状態でも利用できますか？",
+    answer:
+      "事前に端末へ保存した地図・避難所データを使い、BLEとLoRaによる中継、チャット、地図表示、避難経路探索を継続する設計です。利用地域のデータと運用設定は平常時に準備します。",
+  },
+  {
+    question: "企業のBCPや工場・店舗でも相談できますか？",
+    answer:
+      "相談できます。本社と事業所、工場、店舗などの通信確保や、既存の安否確認サービスが使えない時間帯の補完を想定し、対象拠点に合わせて実証内容を整理します。",
+  },
+  {
+    question: "既存の防災サービスとの連携や共同実証は可能ですか？",
+    answer:
+      "可能です。防災情報システム、訓練サービス、通信機器などとの接続を想定し、データ連携範囲、役割分担、検証項目からご相談を承ります。",
+  },
+  {
+    question: "現在の開発・検証段階を教えてください。",
+    answer:
+      "現在は開発中のプロトタイプです。屋外実験で1km以上の通信を確認していますが、第三者検証は未実施です。導入前に利用環境での実証と運用確認を行う前提でご案内します。",
+  },
+];
 
 export default function Home() {
   return (
@@ -33,45 +99,49 @@ export default function Home() {
               DISASTER COMMUNICATION SYSTEM
             </p>
             <h1 className="fade-up fade-up-1 mincho mb-8 text-4xl leading-tight md:text-6xl">
-              通信が途絶えた、
+              通信が途絶えても、
               <br />
-              その先の<em className="not-italic text-brand-accent">「伝える」</em>を。
+              現場の<em className="not-italic text-brand-accent">情報</em>を止めない。
             </h1>
-            {/* H1 は情緒的なコピーなので、直下の1行で「誰向けの何か」を言い切る。 */}
             <p className="fade-up fade-up-2 mb-6 max-w-xl border-l-2 border-brand-accent pl-4 text-lede font-medium text-ink">
-              自治体の防災担当者向け。基地局が停止しても、避難所と現場の情報伝達を続けるオフライン通信システムです。
+              携帯電話が使えない時間帯に、避難所・事業所・現場をつなぐオフライン通信システムです。
             </p>
             <p className="fade-up fade-up-2 mb-10 max-w-xl text-body text-ink-soft">
-              通信インフラが途絶えた被災地でも、安否・物資・危険情報をつなぎ続ける。ADREN（アドレン）は、スマホを活かして現場の情報を止めない災害時通信基盤です。
+              ADREN（アドレン）は、スマートフォンと小型通信モジュールを活用し、安否・物資・危険情報を端末から端末へ中継します。自治体、企業、防災事業者の既存体制に追加できる災害時通信基盤です。
             </p>
             <div className="fade-up fade-up-3 flex flex-col gap-3 sm:flex-row">
               <PrimaryButton href="/document">資料を見る（登録不要）</PrimaryButton>
-              <GhostButton href="/contact">導入について相談する</GhostButton>
+              <GhostButton href="/contact">立場を選んで相談する</GhostButton>
             </div>
           </div>
-          <aside className="fade-up fade-up-4 frame-ticks border border-line-soft bg-white p-8 shadow-[8px_8px_0_0_rgba(26,31,46,0.06)]">
-            <p className="mono mb-6 text-micro tracking-[0.2em] text-ink-soft">{"// 開発中の実験値"}</p>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                ["通信距離", "1", "km以上", "屋外実験時"],
-                ["データ圧縮", "1/1000", "", "最大値"],
-              ].map(([label, value, unit, note]) => (
-                <div
-                  key={label}
-                  className="group border border-line-soft bg-paper p-4 transition-colors duration-300 hover:border-brand-accent"
+          <aside
+            aria-labelledby="audience-heading"
+            className="fade-up fade-up-4 frame-ticks border border-line-soft bg-white p-6 shadow-[8px_8px_0_0_rgba(26,31,46,0.06)] md:p-8"
+          >
+            <p className="mono mb-2 text-micro tracking-[0.2em] text-brand-accent">YOUR ROLE</p>
+            <h2 id="audience-heading" className="mincho mb-2 text-2xl">
+              立場から探す
+            </h2>
+            <p className="mb-6 text-body text-ink-soft">検討内容に合わせて、相談フォームへ進めます。</p>
+            <div className="space-y-3">
+              {AUDIENCE_OPTIONS.map((audience) => (
+                <Link
+                  key={audience.subject}
+                  href={contactHref(audience.subject)}
+                  className="group block border border-line-soft bg-paper p-4 transition-colors hover:border-brand-accent hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent"
                 >
-                  <p className="mono mb-2 text-micro tracking-[0.2em] text-ink-soft">{label}</p>
-                  <p className="mincho text-3xl leading-none transition-colors duration-300 group-hover:text-brand-accent">
-                    {value}
-                    <span className="ml-1 font-sans text-base text-ink-soft">{unit}</span>
-                  </p>
-                  <p className="mt-1 text-micro text-ink-soft">{note}</p>
-                </div>
+                  <span className="flex items-center justify-between gap-4">
+                    <span className="mincho text-xl transition-colors group-hover:text-brand-accent">
+                      {audience.label}
+                    </span>
+                    <span aria-hidden className="text-brand-accent">
+                      →
+                    </span>
+                  </span>
+                  <span className="mt-1 block text-base leading-7 text-ink-soft">{audience.description}</span>
+                </Link>
               ))}
             </div>
-            <p className="mt-6 border-t border-line-soft pt-4 text-micro leading-6 text-ink-soft">
-              いずれも開発中プロトタイプでの測定値です。第三者検証は受けていません。
-            </p>
           </aside>
         </div>
       </section>
@@ -79,7 +149,7 @@ export default function Home() {
       <section className="px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
-            label="PROBLEM / 02"
+            label="PROBLEM"
             title={
               <>
                 災害時、
@@ -87,7 +157,7 @@ export default function Home() {
                 通信は<em className="not-italic text-brand-accent">真っ先に</em>失われる。
               </>
             }
-            lede="基地局の停止、輻輳、停電。これらは過去の災害で繰り返し起きてきました。自治体の災害対応において、通信の確保は依然として未解決の課題です。"
+            lede="基地局の停止、輻輳、停電。これらは過去の災害で繰り返し起きてきました。自治体や企業の災害対応において、通信の確保は依然として未解決の課題です。"
           />
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
@@ -125,7 +195,7 @@ export default function Home() {
         <div className="relative mx-auto max-w-6xl">
           <SectionHead
             dark
-            label="SOLUTION / 03"
+            label="SOLUTION"
             title={
               <>
                 回線に依存しない、
@@ -148,21 +218,56 @@ export default function Home() {
       <section className="px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
-            label="FEATURES / 04"
+            label="ROLE WITH EXISTING SYSTEMS"
             title={
               <>
-                自治体運用を、
+                置き換えず、
+                <br />
+                <em className="not-italic text-brand-accent">通信断の隙間</em>を補う。
+              </>
+            }
+            lede="ADRENは既存の防災・BCP手段と競合させるのではなく、それぞれが届きにくい現場の個別情報を補完します。"
+          />
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {existingSystems.map((system) => (
+              <article key={system.name} className="border border-line-soft bg-white p-6">
+                <p className="mono mb-2 text-micro tracking-[0.18em] text-ink-soft">既存手段</p>
+                <h3 className="mincho text-2xl">{system.name}</h3>
+                <div className="mt-5 border-t border-line-soft pt-5">
+                  <p className="mb-1 text-base font-medium text-ink">主な役割</p>
+                  <p className="text-body text-ink-soft">{system.role}</p>
+                </div>
+                <div className="mt-5 border-l-2 border-brand-accent bg-paper p-4">
+                  <p className="mb-1 text-base font-medium text-ink">ADRENが補う範囲</p>
+                  <p className="text-body text-ink-soft">{system.complement}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className="mt-5 text-base leading-7 text-ink-soft">
+            ※ 実際の構成は、既存設備、対象地域、運用体制を確認したうえで個別に設計します。
+          </p>
+        </div>
+      </section>
+
+      <section className="px-6 py-20 md:px-12 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead
+            label="FEATURES"
+            title={
+              <>
+                災害対応を、
                 <br />
                 支える<em className="not-italic text-brand-accent">4つの</em>特長。
               </>
             }
-            lede="単なる通信技術ではなく、自治体の災害対応フローに組み込めるよう設計しています。導入から運用までを見据えた製品です。"
+            lede="単なる通信技術ではなく、自治体・企業・防災事業者の既存フローに組み込めるよう設計しています。導入から運用までを見据えた製品です。"
           />
           <div className="mt-10 grid gap-px border border-line bg-line md:grid-cols-2">
             {[
               [
                 "スマホを災害時通信端末に拡張",
-                "住民が既に持っているスマートフォンに通信モジュールをBLEで接続し、そのまま中継ノードとして使います。専用端末を人数分配備する必要がありません。",
+                "住民や現場担当者が既に持っているスマートフォンに通信モジュールをBLEで接続し、そのまま中継ノードとして使います。専用端末を人数分配備する必要がありません。",
               ],
               [
                 "高齢者も子供も使えるUI",
@@ -187,6 +292,65 @@ export default function Home() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-y border-line-soft bg-paper-2 px-6 py-20 md:px-12 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead
+            label="IMPLEMENTATION"
+            title={
+              <>
+                小さく確かめ、
+                <br />
+                運用へつなげる。
+              </>
+            }
+            lede="製品を置くだけでは、災害時には使えません。対象業務を絞った実証から始め、訓練と保守まで段階的に設計します。"
+          />
+          <ol className="mt-10 grid gap-4 md:grid-cols-3">
+            {implementationSteps.map((step, index) => (
+              <li key={step.title} className="frame-ticks border border-line-soft bg-white p-7">
+                <p className="mono text-micro tracking-[0.2em] text-brand-accent">STEP 0{index + 1}</p>
+                <h3 className="mincho mt-3 text-2xl">{step.title}</h3>
+                <p className="mt-3 text-body text-ink-soft">{step.body}</p>
+                <div className="mt-5 border-t border-line-soft pt-4">
+                  <p className="text-base font-medium text-ink">確認する成果物</p>
+                  <p className="mt-1 text-base leading-7 text-ink-soft">{step.output}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="px-6 py-20 md:px-12 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead
+            label="FAQ"
+            title="導入検討で、よくある質問。"
+            lede="現段階でお伝えできる範囲を明確にしています。利用環境により変わる内容は、実証前に個別確認します。"
+          />
+          <div className="mt-10 border-t border-line">
+            {faqs.map((item) => (
+              <details key={item.question} className="group border-b border-line">
+                <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent">
+                  <span className="mincho text-xl leading-8 text-ink">{item.question}</span>
+                  <span
+                    aria-hidden
+                    className="text-2xl leading-none text-brand-accent transition-transform group-open:rotate-45"
+                  >
+                    ＋
+                  </span>
+                </summary>
+                <p className="max-w-4xl pb-6 pr-10 text-body text-ink-soft">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+          <p className="mt-8 text-body text-ink-soft">
+            その他の条件は、<Link href="/contact" className="underline underline-offset-4 hover:text-brand-accent">導入・実証・共創の相談窓口</Link>
+            からお問い合わせください。
+          </p>
         </div>
       </section>
 

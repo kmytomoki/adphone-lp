@@ -5,7 +5,7 @@ import { PrintButton } from "./PrintButton";
 export const metadata: Metadata = {
   title: "製品概要資料",
   description:
-    "ADREN（アドレン）の製品概要資料。課題・仕組み・特長・仕様・実績をまとめた1枚資料です。登録不要でそのまま閲覧・印刷・PDF保存できます。",
+    "ADREN（アドレン）の製品概要資料。自治体・企業・防災事業者向けに、課題・仕組み・特長・仕様・実績をまとめています。登録不要で閲覧・印刷・PDF保存できます。",
 };
 
 // このページの記載は、すべて他ページで公開済みの内容から構成している。
@@ -17,7 +17,7 @@ const problems = [
 ];
 
 const features = [
-  ["スマホを災害時通信端末に拡張", "住民が既に持つスマートフォンに通信モジュールをBLEで接続し、そのまま中継ノードとして使う。専用端末を人数分配備する必要がない。"],
+  ["スマホを災害時通信端末に拡張", "住民や現場担当者が既に持つスマートフォンに通信モジュールをBLEで接続し、そのまま中継ノードとして使う。専用端末を人数分配備する必要がない。"],
   ["高齢者も子供も使えるUI", "本文16px以上、見出し20px以上を全画面で確保し、操作を必要最小限の手数に絞っている。"],
   ["完全オフラインで動作", "避難所・道路データと防災情報を端末内に保持し、通信が一切ない状態でも地図表示と避難経路探索が動作する。"],
   ["信頼度スコアで情報を選別", "時間減衰と発信者重みでスコア化。類似情報は統合し、大きく乖離した情報は分離して表示する。"],
@@ -74,7 +74,7 @@ export default function DocumentPage() {
             基地局が停止しても、避難所と現場の情報伝達を続ける
           </h1>
           <p className="mt-4 text-lede text-ink-soft">
-            自治体の防災担当者向け 製品概要資料 ／ 開発: Rewave Technology（沖縄工業高等専門学校発）
+            県・自治体、企業の防災・BCP、防災事業者向け ／ 開発: Rewave Technology（沖縄工業高等専門学校発）
           </p>
         </header>
 
@@ -98,7 +98,7 @@ export default function DocumentPage() {
             </p>
           </Block>
 
-          <Block label="Features" title="自治体運用を支える4つの特長">
+          <Block label="Features" title="災害対応を支える4つの特長">
             <dl className="grid gap-4 sm:grid-cols-2">
               {features.map(([title, body]) => (
                 <div key={title} className="border border-line-soft bg-paper p-4">
@@ -142,9 +142,9 @@ export default function DocumentPage() {
             </ul>
           </Block>
 
-          <Block label="Next Step" title="導入検討・実証のご相談">
+          <Block label="Next Step" title="導入・実証・共創のご相談">
             <p className="text-body text-ink-soft">
-              実証実験、既存システム連携、学校・避難所配備、導入スケジュールなどの具体的なご相談は、
+              自治体・企業への導入、実証実験、既存防災システムとの連携、学校・避難所配備などの具体的なご相談は、
               サイトのお問い合わせフォームより承ります。数営業日以内に担当者よりご連絡いたします。
             </p>
             <p className="mt-2 text-body text-ink-soft">
@@ -155,7 +155,7 @@ export default function DocumentPage() {
                 href="/contact"
                 className="inline-flex min-h-12 items-center rounded-sm border border-ink bg-ink px-6 py-4 text-base font-medium text-white transition-colors hover:bg-brand-accent"
               >
-                導入について相談する
+                立場を選んで相談する
               </Link>
             </div>
           </Block>

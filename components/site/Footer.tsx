@@ -21,7 +21,7 @@ const columns: { title: string; items: { label: string; href: string }[] }[] = [
     title: "Company",
     items: [
       { label: "会社情報・沿革", href: "/about" },
-      { label: "導入・実証のご相談", href: "/contact" },
+      { label: "導入・実証・共創のご相談", href: "/contact" },
       { label: "プライバシーポリシー", href: "/privacy" },
     ],
   },
@@ -39,7 +39,7 @@ export function Footer() {
             AD-HOC / DISASTER-RESILIENT / EMERGENCY NETWORK
           </p>
           <p className="mt-4 max-w-xs text-body text-white/75">
-            災害時、通信が途絶えても、情報は止めない。自治体のための分散型災害情報ネットワーク。
+            災害時、通信が途絶えても、情報は止めない。自治体・企業・防災事業をつなぐ分散型災害情報ネットワーク。
           </p>
         </div>
         {columns.map((col) => (

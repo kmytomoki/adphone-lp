@@ -21,7 +21,11 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-line-soft bg-paper/90 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-12">
-        <Link href="/" className="mincho text-xl font-extrabold tracking-[0.05em]">
+        <Link
+          href="/"
+          aria-label="ADREN ホーム"
+          className="mincho text-xl font-extrabold tracking-[0.05em]"
+        >
           AD<span className="text-brand-accent">REN</span>
           <span className="mono block text-micro tracking-[0.25em] text-ink-soft">REWAVE TECHNOLOGY</span>
         </Link>
@@ -52,7 +56,7 @@ export function Nav() {
             <Link href="/document">資料を見る</Link>
           </Button>
           <Button asChild className="h-11 rounded-sm bg-ink px-4 text-base text-white transition-colors hover:bg-brand-accent">
-            <Link href="/contact">相談する</Link>
+            <Link href="/contact">導入・共創を相談</Link>
           </Button>
         </div>
 
@@ -97,7 +101,7 @@ export function Nav() {
               className="flex min-h-14 items-center gap-4 py-4 text-base font-semibold text-brand-accent"
             >
               <span className="mono text-micro tracking-[0.2em]">06</span>
-              導入・実証について相談する
+              導入・実証・共創を相談する
             </Link>
           </div>
         </div>

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     template: "%s | ADREN",
   },
   description:
-    "災害時でも通信を止めない。BLEとLPWAメッシュで自治体の情報伝達を支えるADREN（アドレン）の公式サイト。Rewave Technology が開発しています。",
+    "災害時でも通信を止めない。BLEとLPWAメッシュで県・自治体、企業、防災事業者の情報伝達を支えるADREN（アドレン）の公式サイト。",
 };
 
 export default function RootLayout({
@@ -57,8 +57,16 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full bg-paper text-ink flex flex-col font-sans">
+        <a
+          href="#main-content"
+          className="fixed top-4 left-4 z-[100] -translate-y-24 bg-ink px-5 py-3 text-base font-medium text-white transition-transform focus:translate-y-0"
+        >
+          本文へ移動
+        </a>
         <Nav />
-        {children}
+        <div id="main-content" className="flex flex-1 flex-col" tabIndex={-1}>
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

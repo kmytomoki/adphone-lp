@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { ArchSvg } from "@/components/site/ArchSvg";
 import { FinalCta } from "@/components/site/FinalCta";
 import { PageHero } from "@/components/site/PageHero";
 import OkinawaMeshMap from "@/src/components/OkinawaMeshMap";
+
+export const metadata: Metadata = {
+  title: "技術・セキュリティ",
+  description:
+    "ADREN（アドレン）のBLE・LoRa通信構成、オフラインデータ、暗号化、信頼度評価、オフライン地図の技術設計を紹介します。",
+};
 
 export default function TechnologyPage() {
   return (

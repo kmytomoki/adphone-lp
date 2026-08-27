@@ -28,7 +28,7 @@ const sections: { title: string; body: React.ReactNode }[] = [
       <>
         <p>お問い合わせフォームの送信時に、以下の情報を取得します。</p>
         <ul className="mt-3 space-y-1">
-          <li>・自治体名・組織名（必須）</li>
+          <li>・組織名（自治体・企業名）（必須）</li>
           <li>・ご担当者氏名（必須）</li>
           <li>・部署・役職（任意）</li>
           <li>・メールアドレス（必須）</li>
@@ -48,7 +48,7 @@ const sections: { title: string; body: React.ReactNode }[] = [
       <>
         <p>取得した情報は、次の目的にのみ利用します。</p>
         <ul className="mt-3 space-y-1">
-          <li>・お問い合わせ・資料請求へのご回答およびご連絡</li>
+          <li>・お問い合わせへのご回答およびご連絡</li>
           <li>・導入検討・実証実験に関するご相談への対応</li>
           <li>・サイトの不正利用防止および安定運用</li>
         </ul>

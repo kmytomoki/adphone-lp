@@ -27,7 +27,7 @@ export async function submitContact(
   const message = text(formData, "message");
 
   const fieldErrors: Record<string, string> = {};
-  if (!organization) fieldErrors.organization = "自治体名・組織名を入力してください。";
+  if (!organization) fieldErrors.organization = "組織名（自治体・企業名）を入力してください。";
   if (!name) fieldErrors.name = "ご担当者氏名を入力してください。";
   if (!email) fieldErrors.email = "メールアドレスを入力してください。";
   else if (!EMAIL_PATTERN.test(email)) fieldErrors.email = "メールアドレスの形式が正しくありません。";

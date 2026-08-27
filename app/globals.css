@@ -161,6 +161,10 @@
     color: inherit;
     text-decoration: none;
   }
+  :where(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 3px;
+  }
   ::selection {
     background: var(--brand-accent);
     color: #fff;

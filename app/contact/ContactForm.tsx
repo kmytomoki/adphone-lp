@@ -2,22 +2,23 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { CONTACT_SUBJECTS } from "@/lib/site";
+import { CONTACT_SUBJECTS, type ContactSubject } from "@/lib/site";
 import { initialContactFormState } from "./form-state";
 import { submitContact } from "./actions";
 
 const FIELD_CLASS =
-  "w-full min-h-12 border border-line bg-paper px-4 py-3 text-base transition-colors outline-none focus:border-ink focus:bg-white";
+  "w-full min-h-12 border border-line bg-paper px-4 py-3 text-base transition-colors outline-none focus:border-ink focus:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent";
 
 type TextFieldProps = {
   id: string;
   label: string;
   type?: string;
+  autoComplete?: string;
   required?: boolean;
   error?: string;
 };
 
-function TextField({ id, label, type = "text", required, error }: TextFieldProps) {
+function TextField({ id, label, type = "text", autoComplete, required, error }: TextFieldProps) {
   return (
     <label className="block" htmlFor={id}>
       <span className="mb-2 block text-base font-medium text-ink">
@@ -28,6 +29,7 @@ function TextField({ id, label, type = "text", required, error }: TextFieldProps
         id={id}
         name={id}
         type={type}
+        autoComplete={autoComplete}
         required={required}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
@@ -42,7 +44,7 @@ function TextField({ id, label, type = "text", required, error }: TextFieldProps
   );
 }
 
-export function ContactForm() {
+export function ContactForm({ defaultSubject }: { defaultSubject?: ContactSubject }) {
   const [state, formAction, pending] = useActionState(submitContact, initialContactFormState);
 
   if (state.status === "success") {
@@ -65,14 +67,44 @@ export function ContactForm() {
         className="hidden"
       />
 
-      <TextField id="organization" label="自治体名・組織名" required error={state.fieldErrors.organization} />
-      <TextField id="name" label="ご担当者氏名" required error={state.fieldErrors.name} />
-      <TextField id="department" label="部署・役職" />
-      <TextField id="email" label="メールアドレス" type="email" required error={state.fieldErrors.email} />
+      <TextField
+        id="organization"
+        label="組織名（自治体・企業名）"
+        autoComplete="organization"
+        required
+        error={state.fieldErrors.organization}
+      />
+      <TextField
+        id="name"
+        label="ご担当者氏名"
+        autoComplete="name"
+        required
+        error={state.fieldErrors.name}
+      />
+      <TextField id="department" label="部署・役職" autoComplete="organization-title" />
+      <TextField
+        id="email"
+        label="メールアドレス"
+        type="email"
+        autoComplete="email"
+        required
+        error={state.fieldErrors.email}
+      />
 
       <label className="block" htmlFor="subject">
         <span className="mb-2 block text-base font-medium text-ink">お問い合わせ種別 *</span>
-        <select id="subject" name="subject" required defaultValue={CONTACT_SUBJECTS[0]} className={FIELD_CLASS}>
+        <select
+          id="subject"
+          name="subject"
+          required
+          defaultValue={defaultSubject ?? ""}
+          aria-invalid={state.fieldErrors.subject ? true : undefined}
+          aria-describedby={state.fieldErrors.subject ? "subject-error" : undefined}
+          className={FIELD_CLASS}
+        >
+          <option value="" disabled>
+            選択してください
+          </option>
           {CONTACT_SUBJECTS.map((subject) => (
             <option key={subject} value={subject}>
               {subject}
@@ -80,7 +112,9 @@ export function ContactForm() {
           ))}
         </select>
         {state.fieldErrors.subject ? (
-          <span className="mt-2 block text-base text-brand-accent">{state.fieldErrors.subject}</span>
+          <span id="subject-error" className="mt-2 block text-base text-brand-accent">
+            {state.fieldErrors.subject}
+          </span>
         ) : null}
       </label>
 

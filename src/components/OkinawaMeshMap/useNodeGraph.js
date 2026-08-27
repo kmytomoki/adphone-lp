@@ -1,5 +1,17 @@
 import { useMemo } from "react";
 
+function createSeededRandom(initialSeed) {
+  let seed = initialSeed >>> 0;
+
+  return () => {
+    seed = (seed + 0x6d2b79f5) >>> 0;
+    let value = seed;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 export function useNodeGraph({
   nodeCount = 80,
   edgeRadius = 75,
@@ -13,12 +25,15 @@ export function useNodeGraph({
     }
 
     const nodes = [];
+    const random = createSeededRandom(
+      nodeCount * 73856093 ^ Math.round(width) * 19349663 ^ Math.round(height) * 83492791
+    );
     const maxAttempts = nodeCount * 250;
     let guard = 0;
     while (nodes.length < nodeCount && guard < maxAttempts) {
       guard += 1;
-      const nx = Math.random();
-      const ny = Math.random();
+      const nx = random();
+      const ny = random();
       if (!landMask(nx, ny)) continue;
       nodes.push({ id: nodes.length, nx, ny });
     }
