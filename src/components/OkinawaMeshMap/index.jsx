@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import {
   BASE_STATION,
   CANVAS_HEIGHT,
@@ -30,6 +31,7 @@ export default function OkinawaMeshMap({
   hopDelay = 420,
   autoPlay = true,
 }) {
+  const reducedMotion = usePrefersReducedMotion();
   const width = CANVAS_WIDTH;
   const height = CANVAS_HEIGHT;
 
@@ -350,7 +352,9 @@ export default function OkinawaMeshMap({
       runtime.nodes.forEach((node) => {
         const px = node.nx * width;
         const py = node.ny * height;
+      if (!reducedMotion) {
         node.glow = Math.max(0, node.glow - 0.008);
+      }
 
         if (node.glow > 0.35) {
           ctx.beginPath();
@@ -386,16 +390,22 @@ export default function OkinawaMeshMap({
         ctx.restore();
       }
 
-      rafRef.current = requestAnimationFrame(animate);
+      if (!reducedMotion) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
     };
 
-    rafRef.current = requestAnimationFrame(animate);
+    if (reducedMotion) {
+      animate(performance.now());
+    } else {
+      rafRef.current = requestAnimationFrame(animate);
+    }
     return () => cancelAnimationFrame(rafRef.current);
-  }, [baseDown, cityCanvasPoints, height, showOutageText, width]);
+  }, [baseDown, cityCanvasPoints, height, reducedMotion, showOutageText, width]);
 
   // Scroll-triggered auto-start
   useEffect(() => {
-    if (!autoPlay || !wrapRef.current) return undefined;
+    if (!autoPlay || reducedMotion || !wrapRef.current) return undefined;
     if (graph.nodes.length === 0) return undefined;
 
     const observer = new IntersectionObserver(
@@ -422,7 +432,7 @@ export default function OkinawaMeshMap({
     observer.observe(wrapRef.current);
     observerRef.current = observer;
     return () => observer.disconnect();
-  }, [autoPlay, graph.nodes.length, startFromNaha]);
+  }, [autoPlay, graph.nodes.length, reducedMotion, startFromNaha]);
 
   useEffect(
     () => () => {
@@ -434,6 +444,7 @@ export default function OkinawaMeshMap({
 
   const handleClick = useCallback(
     (event) => {
+      if (reducedMotion) return;
       const rect = canvasRef.current?.getBoundingClientRect();
       if (!rect) return;
       const x = ((event.clientX - rect.left) / rect.width) * width;
@@ -441,10 +452,11 @@ export default function OkinawaMeshMap({
       const id = nearestNodeId(x, y);
       if (id !== null) startPropagationFrom(id);
     },
-    [height, nearestNodeId, startPropagationFrom, width]
+    [height, nearestNodeId, reducedMotion, startPropagationFrom, width]
   );
 
   const replay = useCallback(() => {
+    if (reducedMotion) return;
     setBaseDown(true);
     setShowOutageText(true);
     const t = setTimeout(() => {
@@ -452,7 +464,7 @@ export default function OkinawaMeshMap({
       setShowOutageText(false);
     }, 600);
     pendingTimersRef.current.push(t);
-  }, [startFromNaha]);
+  }, [reducedMotion, startFromNaha]);
 
   const legend = [
     ["発信源", NODE_SOURCE],
@@ -473,7 +485,9 @@ export default function OkinawaMeshMap({
         <button
           type="button"
           onClick={replay}
-          className="min-h-11 rounded-sm border border-line px-4 py-2 text-base tracking-[0.04em] text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
+          disabled={reducedMotion}
+          aria-disabled={reducedMotion}
+          className="min-h-11 rounded-sm border border-line px-4 py-2 text-base tracking-[0.04em] text-ink-soft transition-all duration-200 enabled:hover:-translate-y-0.5 enabled:hover:border-brand-accent enabled:hover:text-brand-accent disabled:cursor-not-allowed disabled:opacity-60"
         >
           那覇市から再生
         </button>
@@ -484,7 +498,9 @@ export default function OkinawaMeshMap({
           width={width}
           height={height}
           onClick={handleClick}
-          className="block w-full max-w-[440px] cursor-pointer rounded-md border border-line-soft transition-shadow duration-300 hover:shadow-[6px_6px_0_0_rgba(26,31,46,0.08)]"
+          className={`block w-full max-w-[440px] rounded-md border border-line-soft ${
+            reducedMotion ? "cursor-default" : "cursor-pointer transition-shadow duration-300 hover:shadow-[6px_6px_0_0_rgba(26,31,46,0.08)]"
+          }`}
           style={{ aspectRatio: `${width} / ${height}`, backgroundColor: SEA_COLOR }}
         />
       </div>
@@ -497,7 +513,9 @@ export default function OkinawaMeshMap({
         ))}
       </div>
       <p className="mt-2 text-center text-base text-ink-soft">
-        地図上をクリックすると、その地点を起点にメッシュ伝搬が広がります。
+        {reducedMotion
+          ? "モーション軽減の設定が有効なため、アニメーションは静止表示です。伝搬のイメージは上の凡例をご覧ください。"
+          : "地図上をクリックすると、その地点を起点にメッシュ伝搬が広がります。"}
       </p>
     </div>
   );

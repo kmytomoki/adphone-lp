@@ -337,7 +337,7 @@ export default function Home() {
                   alt="沖縄工業高等専門学校の正門前に並ぶチームRewaveのメンバー"
                   fill
                   sizes="(max-width: 1024px) 100vw, 560px"
-                  className="object-cover"
+                  className="pointer-events-none object-cover select-none"
                 />
               </div>
               <p className="mt-2 text-micro text-ink-soft">沖縄工業高等専門学校にて</p>
@@ -362,23 +362,29 @@ export default function Home() {
               ].map((item) => (
                 <figure key={item.src} className="border border-line-soft bg-white p-3">
                   <div className="relative aspect-[4/3] overflow-hidden bg-paper">
-                    <Image src={item.src} alt={item.alt} fill sizes="280px" className="object-cover" />
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="280px"
+                      className="pointer-events-none object-cover select-none"
+                    />
                   </div>
                   <figcaption className="mt-2 text-micro text-ink-soft">{item.note}</figcaption>
                 </figure>
               ))}
-              <article className="flex flex-col justify-center border border-line-soft bg-white p-5">
+              <Link
+                href="/about"
+                className="group relative z-10 flex min-h-44 flex-col justify-center border border-line-soft bg-white p-5 transition-colors hover:border-brand-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent"
+              >
                 <p className="text-base font-medium text-ink">現在の段階</p>
                 <p className="mt-2 text-body text-ink-soft">
                   開発中のプロトタイプです。屋外実験で1km以上の通信を確認していますが、第三者検証は未実施です。
                 </p>
-                <Link
-                  href="/about"
-                  className="mt-4 inline-flex min-h-11 items-center text-base font-medium text-brand-accent underline underline-offset-4 hover:text-ink"
-                >
+                <span className="mt-4 inline-flex min-h-11 items-center text-base font-medium text-brand-accent group-hover:text-ink">
                   会社情報・沿革を見る →
-                </Link>
-              </article>
+                </span>
+              </Link>
             </div>
           </div>
           <ul className="mt-8 grid gap-4 md:grid-cols-3">

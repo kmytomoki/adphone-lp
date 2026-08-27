@@ -160,6 +160,10 @@
   a {
     color: inherit;
     text-decoration: none;
+    touch-action: manipulation;
+  }
+  button {
+    touch-action: manipulation;
   }
   :where(a, button, input, select, textarea):focus-visible {
     outline: 2px solid var(--brand-accent);
@@ -306,6 +310,9 @@
     .hover-card:hover {
       transform: none;
       transition: none;
+    }
+    html {
+      scroll-behavior: auto;
     }
   }
 }
