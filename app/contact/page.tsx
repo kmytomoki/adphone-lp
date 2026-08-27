@@ -9,6 +9,7 @@ import {
   publicContact,
   type ContactSubject,
 } from "@/lib/site";
+import { documentHref } from "@/lib/document-content";
 import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
@@ -105,21 +106,31 @@ export default async function ContactPage({
                 {AUDIENCE_OPTIONS.map((audience) => {
                   const selected = audience.subject === selectedSubject;
                   return (
-                    <Link
+                    <div
                       key={audience.subject}
-                      href={contactHref(audience.subject)}
                       className={
                         selected
-                          ? "border border-brand-accent bg-paper p-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent"
-                          : "border border-line-soft bg-paper p-4 transition-colors hover:border-brand-accent hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent"
+                          ? "border border-brand-accent bg-paper p-4"
+                          : "border border-line-soft bg-paper p-4"
                       }
-                      aria-current={selected ? "true" : undefined}
                     >
-                      <span className="mincho block text-lg">{audience.label}</span>
-                      <span className="mt-1 block text-base leading-7 text-ink-soft">
-                        {selected ? "選択中" : "この立場で相談する"}
-                      </span>
-                    </Link>
+                      <Link
+                        href={contactHref(audience.subject)}
+                        className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent"
+                        aria-current={selected ? "true" : undefined}
+                      >
+                        <span className="mincho block text-lg">{audience.label}</span>
+                        <span className="mt-1 block text-base leading-7 text-ink-soft">
+                          {selected ? "選択中" : "この立場で相談する"}
+                        </span>
+                      </Link>
+                      <Link
+                        href={documentHref(audience.documentAudience)}
+                        className="mt-3 inline-flex min-h-11 items-center text-base text-brand-accent underline underline-offset-4 hover:text-ink"
+                      >
+                        この立場向けの資料を見る
+                      </Link>
+                    </div>
                   );
                 })}
               </div>

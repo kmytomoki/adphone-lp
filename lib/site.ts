@@ -34,24 +34,28 @@ export const AUDIENCE_OPTIONS: readonly {
   description: string;
   subject: ContactSubject;
   usecasesHref: string;
+  documentAudience: "municipality" | "enterprise" | "partners";
 }[] = [
   {
     label: "県・自治体の防災",
     description: "避難所と災害対策本部の情報伝達、孤立地域への備えを検討する方",
     subject: "県・自治体の導入相談",
     usecasesHref: "/usecases#municipality",
+    documentAudience: "municipality",
   },
   {
     label: "企業の防災・BCP",
     description: "工場・事業所・店舗間の通信確保や従業員の安否確認を検討する方",
     subject: "企業の防災・BCP相談",
     usecasesHref: "/usecases#enterprise",
+    documentAudience: "enterprise",
   },
   {
     label: "共創・事業連携",
     description: "防災サービスとの連携、共同実証、技術提携を検討する企業の方",
     subject: "共創・事業連携",
     usecasesHref: "/usecases#partners",
+    documentAudience: "partners",
   },
 ];
 

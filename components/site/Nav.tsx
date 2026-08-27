@@ -92,13 +92,27 @@ export function Nav() {
                     key={audience.subject}
                     href={audience.usecasesHref}
                     role="menuitem"
-                    className="block border-b border-line-soft p-4 transition-colors last:border-b-0 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-accent"
+                    className="block border-b border-line-soft p-4 transition-colors hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-accent"
                     onClick={() => setAudienceOpen(false)}
                   >
                     <span className="mincho block text-lg text-ink">{audience.label}</span>
                     <span className="mt-1 block text-base leading-7 text-ink-soft">{audience.description}</span>
                   </Link>
                 ))}
+                <div className="border-t border-line-soft px-4 py-2">
+                  <p className="mono mb-2 text-micro tracking-[0.15em] text-ink-soft">資料</p>
+                  {AUDIENCE_OPTIONS.map((audience) => (
+                    <Link
+                      key={`doc-${audience.subject}`}
+                      href={`/document?audience=${audience.documentAudience}`}
+                      role="menuitem"
+                      className="block border-b border-line-soft py-3 last:border-b-0 hover:text-brand-accent"
+                      onClick={() => setAudienceOpen(false)}
+                    >
+                      <span className="text-base text-ink">{audience.label}向け資料</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             ) : null}
           </div>
@@ -175,11 +189,22 @@ export function Nav() {
                   <Link
                     key={audience.subject}
                     href={audience.usecasesHref}
-                    className="block border-b border-line-soft py-3 last:border-b-0"
+                    className="block border-b border-line-soft py-3"
                     onClick={() => setOpen(false)}
                   >
                     <span className="mincho block text-lg">{audience.label}</span>
                     <span className="mt-0.5 block text-base leading-7 text-ink-soft">{audience.description}</span>
+                  </Link>
+                ))}
+                <p className="mono mb-2 mt-3 text-micro tracking-[0.15em] text-ink-soft">資料</p>
+                {AUDIENCE_OPTIONS.map((audience) => (
+                  <Link
+                    key={`mobile-doc-${audience.subject}`}
+                    href={`/document?audience=${audience.documentAudience}`}
+                    className="block border-b border-line-soft py-3 last:border-b-0"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="text-base text-ink">{audience.label}向け資料</span>
                   </Link>
                 ))}
               </div>
