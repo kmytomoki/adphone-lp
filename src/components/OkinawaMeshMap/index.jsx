@@ -35,6 +35,7 @@ export default function OkinawaMeshMap({
 
   const canvasRef = useRef(null);
   const wrapRef = useRef(null);
+  const reachedElRef = useRef(null);
   const rafRef = useRef(0);
   const observerRef = useRef(null);
   const autoTriggeredRef = useRef(false);
@@ -334,6 +335,18 @@ export default function OkinawaMeshMap({
         }
       }
 
+      // City markers and labels
+      cityCanvasPoints.forEach((city) => {
+        ctx.beginPath();
+        ctx.arc(city.x, city.y, 2.6, 0, Math.PI * 2);
+        ctx.fillStyle = "#1a1f2e";
+        ctx.fill();
+        ctx.font = "10px 'Hiragino Sans', 'Yu Gothic', sans-serif";
+        ctx.fillStyle = "rgba(26,31,46,0.72)";
+        ctx.textAlign = "left";
+        ctx.fillText(city.name, city.x + 7, city.y + 3);
+      });
+
       runtime.nodes.forEach((node) => {
         const px = node.nx * width;
         const py = node.ny * height;
@@ -354,6 +367,15 @@ export default function OkinawaMeshMap({
         else ctx.fillStyle = NODE_IDLE;
         ctx.fill();
       });
+
+      // Reached-node counter (updated outside React state to avoid re-renders)
+      if (reachedElRef.current && runtime.nodes.length > 0) {
+        let reached = 0;
+        for (const node of runtime.nodes) {
+          if (node.state !== "idle") reached += 1;
+        }
+        reachedElRef.current.textContent = `${reached} / ${runtime.nodes.length}`;
+      }
 
       if (showOutageText) {
         ctx.save();
@@ -422,38 +444,38 @@ export default function OkinawaMeshMap({
     [height, nearestNodeId, startPropagationFrom, width]
   );
 
-  const toggleBaseDown = useCallback(() => {
-    const next = !baseDown;
-    setBaseDown(next);
-    if (next) {
-      setShowOutageText(true);
-      const t = setTimeout(() => {
-        startFromNaha();
-        setShowOutageText(false);
-      }, 600);
-      pendingTimersRef.current.push(t);
-    } else {
+  const replay = useCallback(() => {
+    setBaseDown(true);
+    setShowOutageText(true);
+    const t = setTimeout(() => {
+      startFromNaha();
       setShowOutageText(false);
-      resetRuntime();
-    }
-  }, [baseDown, resetRuntime, startFromNaha]);
+    }, 600);
+    pendingTimersRef.current.push(t);
+  }, [startFromNaha]);
+
+  const legend = [
+    ["発信源", NODE_SOURCE],
+    ["中継中", NODE_RELAY],
+    ["受信済", NODE_ACTIVE],
+    ["未受信", NODE_IDLE],
+  ];
 
   return (
     <div ref={wrapRef} className="w-full">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-ink-soft">
-          沖縄本島 アドホックメッシュ伝搬シミュレーション
-        </p>
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-sm text-ink">沖縄本島 アドホックメッシュ伝搬シミュレーション</p>
+          <p className="mono mt-1 text-[10px] tracking-[0.15em] text-ink-soft">
+            REACHED NODES: <span ref={reachedElRef} className="text-brand-accent">0 / 0</span>
+          </p>
+        </div>
         <button
           type="button"
-          onClick={toggleBaseDown}
-          className={`rounded-sm border px-3 py-2 text-xs transition-colors ${
-            baseDown
-              ? "border-brand-accent text-brand-accent"
-              : "border-line text-ink-soft hover:border-ink-soft"
-          }`}
+          onClick={replay}
+          className="rounded-sm border border-line px-4 py-2 text-xs tracking-[0.08em] text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
         >
-          基地局ダウン: {baseDown ? "ON" : "OFF"}
+          那覇市から再生
         </button>
       </div>
       <div className="flex justify-center">
@@ -462,11 +484,19 @@ export default function OkinawaMeshMap({
           width={width}
           height={height}
           onClick={handleClick}
-          className="block w-full max-w-[440px] cursor-pointer rounded-md border border-line-soft"
+          className="block w-full max-w-[440px] cursor-pointer rounded-md border border-line-soft transition-shadow duration-300 hover:shadow-[6px_6px_0_0_rgba(26,31,46,0.08)]"
           style={{ aspectRatio: `${width} / ${height}`, backgroundColor: SEA_COLOR }}
         />
       </div>
-      <p className="mt-3 text-center text-[11px] tracking-[0.05em] text-ink-soft">
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+        {legend.map(([label, color]) => (
+          <span key={label} className="flex items-center gap-1.5 text-[11px] text-ink-soft">
+            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
+            {label}
+          </span>
+        ))}
+      </div>
+      <p className="mt-2 text-center text-[11px] tracking-[0.05em] text-ink-soft">
         地図上をクリックすると、その地点を起点にメッシュ伝搬が広がります。
       </p>
     </div>

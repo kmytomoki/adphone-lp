@@ -1,7 +1,36 @@
 import { PageHero } from "@/components/site/PageHero";
 import { PrimaryButton } from "@/components/site/Buttons";
+import { publicContact } from "@/lib/site";
+import { ContactForm } from "./ContactForm";
+
+const entryPoints = [
+  {
+    eyebrow: "FOR EVALUATION",
+    title: "資料請求",
+    body: "導入検討向けの概要資料をお送りします。まずは情報収集から始めたい自治体・教育機関担当者向けです。",
+    cta: "資料請求フォームへ",
+    highlighted: true,
+  },
+  {
+    eyebrow: "FOR DETAILED INQUIRY",
+    title: "自治体導入・実証相談",
+    body: "実証実験、既存システム連携、学校・避難所配備、導入スケジュールなどの具体的なご相談はこちら。",
+    cta: "相談フォームへ",
+    highlighted: false,
+  },
+];
 
 export default function ContactPage() {
+  // 送信先が設定されていないときはフォームを出さない。
+  // 押しても何も起きないフォームは、窓口が無いことより信用を損なう。
+  const formEnabled = Boolean(process.env.CONTACT_FORM_ENDPOINT);
+
+  const details = [
+    { label: "EMAIL", value: publicContact.email, href: `mailto:${publicContact.email}` },
+    { label: "PHONE", value: publicContact.phone, href: `tel:${publicContact.phone}` },
+    { label: "ADDRESS", value: publicContact.address, href: null },
+  ].filter((detail) => Boolean(detail.value));
+
   return (
     <main className="flex-1">
       <PageHero
@@ -12,95 +41,57 @@ export default function ContactPage() {
 
       <section className="px-6 py-14 md:px-12">
         <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-2">
-          <article className="border-2 border-ink bg-white p-8">
-            <p className="mono mb-2 text-[11px] tracking-[0.15em] text-ink-soft">FOR EVALUATION</p>
-            <h2 className="mincho mb-3 text-3xl">資料請求</h2>
-            <p className="mb-5 text-sm leading-8 text-ink-soft">
-              導入検討向けの概要資料をお送りします。まずは情報収集から始めたい自治体・教育機関担当者向けです。
-            </p>
-            <PrimaryButton href="mailto:contact@adophone.example.jp?subject=資料請求">
-              メールで資料請求
-            </PrimaryButton>
-          </article>
-
-          <article className="border border-line-soft bg-white p-8">
-            <p className="mono mb-2 text-[11px] tracking-[0.15em] text-ink-soft">FOR DETAILED INQUIRY</p>
-            <h2 className="mincho mb-3 text-3xl">自治体導入・実証相談</h2>
-            <p className="mb-5 text-sm leading-8 text-ink-soft">
-              実証実験、既存システム連携、学校・避難所配備、導入スケジュールなどの具体的なご相談はこちら。
-            </p>
-            <PrimaryButton href="mailto:contact@adophone.example.jp?subject=自治体導入・実証相談">
-              メールで相談する
-            </PrimaryButton>
-          </article>
+          {entryPoints.map((entry) => (
+            <article
+              key={entry.title}
+              className={
+                entry.highlighted
+                  ? "hover-card frame-ticks border-2 border-ink bg-white p-8"
+                  : "hover-card border border-line-soft bg-white p-8"
+              }
+            >
+              <p className="mono mb-2 text-[11px] tracking-[0.15em] text-ink-soft">{entry.eyebrow}</p>
+              <h2 className="mincho mb-3 text-3xl">{entry.title}</h2>
+              <p className="mb-5 text-sm leading-8 text-ink-soft">{entry.body}</p>
+              {formEnabled ? <PrimaryButton href="#contact-form">{entry.cta}</PrimaryButton> : null}
+            </article>
+          ))}
         </div>
       </section>
 
       <section className="px-6 pb-14 md:px-12">
         <div className="mx-auto max-w-3xl border border-line-soft bg-white p-8">
-          <h2 className="mincho mb-6 text-3xl">お問い合わせフォーム</h2>
-          <div className="space-y-4">
-            {/* TODO: Replace with Server Actions or external form service */}
-            {[
-              "自治体名・組織名 *",
-              "ご担当者氏名 *",
-              "部署・役職",
-              "メールアドレス *",
-            ].map((label) => (
-              <label key={label} className="block">
-                <span className="mb-1 block text-xs text-ink-soft">{label}</span>
-                <input
-                  type="text"
-                  className="w-full border border-line bg-paper px-3 py-2 text-sm"
-                  placeholder={label}
-                />
-              </label>
+          <h2 className="mincho mb-6 text-3xl" id="contact-form">
+            お問い合わせフォーム
+          </h2>
+          {formEnabled ? (
+            <ContactForm />
+          ) : (
+            <p className="text-sm leading-8 text-ink-soft">
+              お問い合わせ窓口は現在準備中です。受付を開始次第、このページでご案内します。
+            </p>
+          )}
+        </div>
+      </section>
+
+      {details.length > 0 ? (
+        <section className="px-6 pb-20 md:px-12">
+          <div className="mx-auto grid max-w-6xl gap-4 border border-line-soft bg-paper-2 p-8 md:grid-cols-3">
+            {details.map((detail) => (
+              <div key={detail.label}>
+                <p className="mono text-[10px] tracking-[0.15em] text-ink-soft">{detail.label}</p>
+                {detail.href ? (
+                  <a href={detail.href} className="text-sm text-ink">
+                    {detail.value}
+                  </a>
+                ) : (
+                  <p className="text-sm text-ink">{detail.value}</p>
+                )}
+              </div>
             ))}
-
-            <label className="block">
-              <span className="mb-1 block text-xs text-ink-soft">お問い合わせ種別 *</span>
-              <select className="w-full border border-line bg-paper px-3 py-2 text-sm">
-                <option>資料請求</option>
-                <option>自治体導入相談</option>
-                <option>実証実験相談</option>
-                <option>学校・避難所配備検討</option>
-                <option>その他</option>
-              </select>
-            </label>
-
-            <label className="block">
-              <span className="mb-1 block text-xs text-ink-soft">ご質問・ご相談内容</span>
-              <textarea className="h-28 w-full border border-line bg-paper px-3 py-2 text-sm" />
-            </label>
-
-            <button
-              type="button"
-              className="rounded-sm border border-ink bg-ink px-5 py-3 text-xs tracking-[0.08em] text-white uppercase"
-            >
-              送信する（準備中）
-            </button>
           </div>
-        </div>
-      </section>
-
-      <section className="px-6 pb-20 md:px-12">
-        <div className="mx-auto grid max-w-6xl gap-4 border border-line-soft bg-paper-2 p-8 md:grid-cols-3">
-          <div>
-            <p className="mono text-[10px] tracking-[0.15em] text-ink-soft">EMAIL</p>
-            <a href="mailto:contact@adophone.example.jp" className="text-sm text-ink">
-              contact@adophone.example.jp
-            </a>
-          </div>
-          <div>
-            <p className="mono text-[10px] tracking-[0.15em] text-ink-soft">PHONE</p>
-            <p className="text-sm text-ink">00-0000-0000</p>
-          </div>
-          <div>
-            <p className="mono text-[10px] tracking-[0.15em] text-ink-soft">ADDRESS</p>
-            <p className="text-sm text-ink">Tokyo, Japan (placeholder)</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </main>
   );
 }

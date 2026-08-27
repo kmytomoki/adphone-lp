@@ -13,10 +13,10 @@ export default function TechnologyPage() {
       />
 
       <section className="px-6 py-14 md:px-12">
-        <div className="mx-auto max-w-6xl border border-line-soft bg-white p-4 md:p-8">
+        <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-4 md:p-8">
           <h2 className="mono mb-4 text-[12px] tracking-[0.2em] text-ink-soft uppercase">SYSTEM ARCHITECTURE</h2>
           <p className="mb-6 text-sm leading-8 text-ink-soft">
-            AdPhone (ESP32 / LoRa) がスマホとBLEで接続し、端末同士はLoRaでアドホック中継。必要に応じて5Gへブリッジし、通信断環境でも情報流通を維持します。
+            ADREN (ESP32 / LoRa) がスマホとBLEで接続し、端末同士はLoRaでアドホック中継。必要に応じて5Gへブリッジし、通信断環境でも情報流通を維持します。
           </p>
           <ArchSvg />
         </div>
@@ -41,7 +41,7 @@ export default function TechnologyPage() {
               "被害画像から崩壊度や対象物を抽出。軽量化モデルで端末処理を可能にし、低帯域でも扱える情報へ圧縮。",
             ],
           ].map(([label, title, text]) => (
-            <article key={label} className="border border-line-soft bg-paper p-6">
+            <article key={label} className="hover-card hover-card-accent border border-line-soft bg-paper p-6">
               <p className="mono mb-2 text-[11px] tracking-[0.2em] text-brand-accent">{label}</p>
               <h3 className="mincho mb-3 text-2xl">{title}</h3>
               <p className="text-sm leading-7 text-ink-soft">{text}</p>
@@ -55,14 +55,21 @@ export default function TechnologyPage() {
           <h2 className="mono border-b border-line-soft px-6 py-4 text-[12px] tracking-[0.2em] text-ink-soft uppercase">
             SECURITY & UNIQUENESS
           </h2>
+          <p className="border-b border-line-soft px-6 py-4 text-sm leading-7 text-ink-soft">
+            以下の暗号処理は LPWA (LoRa) 中継区間に実装しています。ノード起動時に鍵ペアを生成し、
+            公開鍵を配布したうえで、ペアごとに導出した共通鍵で通信します。
+          </p>
           {[
-            "X25519 (ECDH) による安全な鍵交換と共有鍵導出",
+            "X25519 (ECDH) による鍵交換。共通鍵は電波に乗せない",
             "AES-256-GCM による暗号化と改ざん検知",
             "Ed25519 による送信者認証・なりすまし防止",
             "信頼度スコアに基づく情報統合・フェイク情報の抑制",
             "圧縮・軽量化したAI推論による低帯域向け最適化",
           ].map((paper, index) => (
-            <div key={paper} className="grid gap-3 border-b border-line-soft px-6 py-4 last:border-b-0 md:grid-cols-[100px_1fr_90px] md:items-center">
+            <div
+              key={paper}
+              className="grid gap-3 border-b border-line-soft px-6 py-4 transition-colors duration-200 last:border-b-0 hover:bg-paper md:grid-cols-[100px_1fr_90px] md:items-center"
+            >
               <p className="mono text-[10px] tracking-[0.15em] text-ink-soft">POINT 0{index + 1}</p>
               <p className="text-sm text-ink">{paper}</p>
               <span className="mono text-[10px] tracking-[0.15em] text-brand-accent">TECH</span>
@@ -73,7 +80,7 @@ export default function TechnologyPage() {
 
       <section className="px-6 pb-14 md:px-12">
         <div className="mx-auto max-w-6xl grid gap-4 md:grid-cols-2">
-          <article className="border border-line-soft bg-white p-6">
+          <article className="hover-card border border-line-soft bg-white p-6">
             <h2 className="mono mb-4 text-[12px] tracking-[0.2em] text-ink-soft uppercase">TRUST SCORE ENGINE</h2>
             <p className="mb-4 text-sm leading-8 text-ink-soft">
               複数の投稿を比較し、時間経過と発信者信頼度を加味してスコア化。明らかに乖離した情報は優先度を下げ、防災センターでの判断負荷を下げます。
@@ -85,7 +92,7 @@ export default function TechnologyPage() {
             </ul>
           </article>
 
-          <article className="border border-line-soft bg-white p-6">
+          <article className="hover-card border border-line-soft bg-white p-6">
             <h2 className="mono mb-4 text-[12px] tracking-[0.2em] text-ink-soft uppercase">OFFLINE MAP & ROUTING</h2>
             <p className="mb-4 text-sm leading-8 text-ink-soft">
               完全オフライン時でも、地図表示と避難ルート探索を継続します。A*探索をベースに、危険エリアを回避する運用ロジックを重ねています。
@@ -100,14 +107,7 @@ export default function TechnologyPage() {
       </section>
 
       <section className="px-6 pb-20 md:px-12">
-        <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-2">
-          <div className="paper-grid h-56 border border-line-soft bg-paper" />
-          <div className="paper-grid h-56 border border-line-soft bg-paper" />
-        </div>
-      </section>
-
-      <section className="px-6 pb-20 md:px-12">
-        <div className="mx-auto max-w-6xl border border-line-soft bg-white p-4 md:p-8">
+        <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-4 md:p-8">
           <h2 className="mono mb-4 text-[12px] tracking-[0.2em] text-ink-soft uppercase">OKINAWA MESH DEMO</h2>
           <OkinawaMeshMap nodeCount={80} edgeRadius={75} hopDelay={420} autoPlay />
         </div>

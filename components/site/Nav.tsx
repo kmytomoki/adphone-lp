@@ -22,8 +22,8 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b border-line-soft bg-paper/90 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-12">
         <Link href="/" className="mincho text-xl font-extrabold tracking-[0.05em]">
-          アド<span className="text-brand-accent">フォン</span>
-          <span className="mono block text-[9px] tracking-[0.25em] text-ink-soft">ADOPHONE / OFFLINE MESH</span>
+          AD<span className="text-brand-accent">REN</span>
+          <span className="mono block text-[9px] tracking-[0.25em] text-ink-soft">REWAVE TECHNOLOGY</span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -33,20 +33,20 @@ export function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
+                data-active={active}
                 className={cn(
-                  "text-sm relative pb-1",
+                  "link-line text-sm transition-colors",
                   active ? "text-ink font-semibold" : "text-ink-soft hover:text-ink"
                 )}
               >
                 {link.label}
-                <span className={cn("absolute inset-x-0 -bottom-0.5 h-px bg-ink", active ? "scale-100" : "scale-0")} />
               </Link>
             );
           })}
-          <Button asChild variant="outline" size="sm" className="rounded-sm">
+          <Button asChild variant="outline" size="sm" className="rounded-sm border-ink/30 transition-colors hover:border-ink">
             <Link href="/contact">資料請求</Link>
           </Button>
-          <Button asChild size="sm" className="rounded-sm bg-ink text-white hover:bg-brand-accent">
+          <Button asChild size="sm" className="rounded-sm bg-ink text-white transition-colors hover:bg-brand-accent">
             <Link href="/contact">お問い合わせ</Link>
           </Button>
         </div>
@@ -65,18 +65,24 @@ export function Nav() {
 
       {open ? (
         <div className="border-t border-line-soft bg-paper px-6 py-6 md:hidden">
-          <div className="flex flex-col gap-4">
-            {links.map((link) => (
+          <div className="flex flex-col">
+            {links.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-base text-ink"
+                className="flex items-baseline gap-4 border-b border-line-soft py-4 text-base text-ink transition-colors hover:text-brand-accent"
                 onClick={() => setOpen(false)}
               >
+                <span className="mono text-[10px] tracking-[0.2em] text-ink-soft">0{index + 1}</span>
                 {link.label}
               </Link>
             ))}
-            <Link href="/contact" onClick={() => setOpen(false)} className="text-base text-brand-accent">
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="flex items-baseline gap-4 py-4 text-base font-semibold text-brand-accent"
+            >
+              <span className="mono text-[10px] tracking-[0.2em]">05</span>
               資料請求・お問い合わせ
             </Link>
           </div>

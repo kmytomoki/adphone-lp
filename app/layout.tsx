@@ -23,11 +23,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "アドフォン | 災害時オフライン通信",
-    template: "%s | アドフォン",
+    default: "ADREN | 災害時オフライン通信",
+    template: "%s | ADREN",
   },
   description:
-    "災害時でも通信を止めない。BLEとLPWAメッシュで自治体の情報伝達を支えるアドフォンの公式サイト。",
+    "災害時でも通信を止めない。BLEとLPWAメッシュで自治体の情報伝達を支えるADREN（アドレン）の公式サイト。Rewave Technology が開発しています。",
 };
 
 export default function RootLayout({
