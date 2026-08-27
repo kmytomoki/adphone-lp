@@ -22,8 +22,8 @@ export default function ProductPage() {
 
       <section className="px-6 py-14 md:px-12">
         <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-8 text-center md:p-16">
-          <p className="mono mb-3 text-[11px] tracking-[0.2em] text-ink-soft">PRODUCT VISUAL</p>
-          <p className="mx-auto mb-6 max-w-3xl text-sm leading-8 text-ink-soft">
+          <p className="mono mb-3 text-micro tracking-[0.2em] text-ink-soft">PRODUCT VISUAL</p>
+          <p className="mx-auto mb-6 max-w-3xl text-body text-ink-soft">
             スマートフォンにADRENを接続し、近距離はBLE、遠距離はLoRaで中継。通信が切れた現場でも、既存スマホ資産をそのまま災害通信ノードとして活用できます。
           </p>
           <div className="relative mx-auto aspect-[3/2] w-full max-w-4xl overflow-hidden border border-line-soft bg-paper">
@@ -36,7 +36,7 @@ export default function ProductPage() {
               priority
             />
           </div>
-          <p className="mt-3 text-[11px] text-ink-soft">
+          <p className="mt-3 text-micro text-ink-soft">
             ※ 製品デザインの3Dレンダリングです。ロゴは旧称のものを使用しています。
           </p>
         </div>
@@ -54,12 +54,12 @@ export default function ProductPage() {
               className="grid items-center gap-8 border-b border-line-soft pb-10 md:grid-cols-2"
             >
               <div className={index % 2 === 0 ? "order-1" : "order-2 md:order-1"}>
-                <p className="mono mb-2 flex items-center gap-3 text-[11px] tracking-[0.2em] text-brand-accent">
+                <p className="mono mb-2 flex items-center gap-3 text-micro tracking-[0.2em] text-brand-accent">
                   <span className="inline-block h-px w-6 bg-brand-accent" />
                   機能 0{index + 1}
                 </p>
                 <h2 className="mincho mb-3 text-3xl">{title}</h2>
-                <p className="text-sm leading-8 text-ink-soft">
+                <p className="text-body text-ink-soft">
                   {index === 0
                     ? "画像認識 (YOLOv11) と音声処理を組み合わせ、建物崩壊度や被災者属性をテキスト化。重いデータを圧縮し、LPWAでも送信可能な形に変換します。"
                     : index === 1
@@ -77,7 +77,7 @@ export default function ProductPage() {
                     className="object-cover"
                   />
                 </div>
-                <p className="mt-2 text-[11px] text-ink-soft">{note}</p>
+                <p className="mt-2 text-micro text-ink-soft">{note}</p>
               </div>
             </div>
           ))}
@@ -86,17 +86,17 @@ export default function ProductPage() {
 
       <section className="px-6 pb-20 md:px-12">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mono mb-4 text-[12px] tracking-[0.2em] text-ink-soft uppercase">仕様</h2>
+          <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft uppercase">仕様</h2>
           <div className="frame-ticks border border-line">
             {specs.map(([key, value]) => (
               <div
                 key={key}
                 className="group grid border-b border-line-soft last:border-b-0 md:grid-cols-[220px_1fr]"
               >
-                <div className="bg-paper-2 px-4 py-3 text-sm text-ink transition-colors duration-200 group-hover:bg-line-soft">
+                <div className="bg-paper-2 px-4 py-3 text-body text-ink transition-colors duration-200 group-hover:bg-line-soft">
                   {key}
                 </div>
-                <div className="bg-white px-4 py-3 text-sm text-ink-soft transition-colors duration-200 group-hover:bg-paper group-hover:text-ink">
+                <div className="bg-white px-4 py-3 text-body text-ink-soft transition-colors duration-200 group-hover:bg-paper group-hover:text-ink">
                   {value}
                 </div>
               </div>

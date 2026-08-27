@@ -19,7 +19,7 @@ export function SectionHead({ label, title, lede, dark, className }: SectionHead
       <div>
         <p
           className={cn(
-            "mono mb-4 flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase",
+            "mono mb-4 flex items-center gap-3 text-micro tracking-[0.25em] uppercase",
             dark ? "text-brand-accent-soft" : "text-brand-accent"
           )}
         >
@@ -30,7 +30,7 @@ export function SectionHead({ label, title, lede, dark, className }: SectionHead
           {title}
         </h2>
       </div>
-      <p className={cn("max-w-xl text-sm leading-8", dark ? "text-white/70" : "text-ink-soft")}>{lede}</p>
+      <p className={cn("max-w-xl text-body", dark ? "text-white/70" : "text-ink-soft")}>{lede}</p>
     </div>
   );
 }

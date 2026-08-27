@@ -5,6 +5,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* --- タイポグラフィ・スケール ---------------------------------------
+     ADRENアプリ本体が「本文16px以上・見出し20px以上」を掲げているため、
+     LP側も同じ基準を満たす。読み手は自治体の防災担当（40〜60代中心）。
+     text-sm(14px)/text-xs(12px) を本文やボタンに使わないこと。ボタンは text-base(16px)。
+     text-micro(12px) がサイト全体の最小サイズで、mono の見出しラベル専用。 */
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.6;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.9;
+  --text-lede: 1.125rem;
+  --text-lede--line-height: 1.9;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -302,5 +314,27 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* --- 印刷 / PDF保存 -------------------------------------------------
+   /document を「登録不要でその場でPDF化できる資料」として使うための指定。
+   ナビ・フッター・画面専用のボタンは印刷面から落とす。 */
+@media print {
+  body > header,
+  body > footer,
+  .print-hide {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  a[target="_blank"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.7em;
+    word-break: break-all;
+  }
+  @page {
+    margin: 14mm;
   }
 }

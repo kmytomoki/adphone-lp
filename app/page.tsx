@@ -14,7 +14,7 @@ export default function Home() {
         />
         <p
           aria-hidden
-          className="mono pointer-events-none absolute top-1/2 right-2 hidden -translate-y-1/2 text-[10px] tracking-[0.5em] text-ink/25 select-none lg:block"
+          className="mono pointer-events-none absolute top-1/2 right-2 hidden -translate-y-1/2 text-micro tracking-[0.5em] text-ink/25 select-none lg:block"
           style={{ writingMode: "vertical-rl" }}
         >
           災害時通信基盤 ── ADREN / AD-HOC DISASTER-RESILIENT EMERGENCY NETWORK
@@ -28,7 +28,7 @@ export default function Home() {
 
         <div className="relative mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.3fr_1fr] md:items-center">
           <div>
-            <p className="fade-up mono mb-6 flex items-center gap-3 text-[11px] tracking-[0.25em] text-brand-accent uppercase">
+            <p className="fade-up mono mb-6 flex items-center gap-3 text-micro tracking-[0.25em] text-brand-accent uppercase">
               <span className="inline-block h-px w-8 bg-brand-accent" />
               DISASTER COMMUNICATION SYSTEM
             </p>
@@ -37,16 +37,20 @@ export default function Home() {
               <br />
               その先の<em className="not-italic text-brand-accent">「伝える」</em>を。
             </h1>
-            <p className="fade-up fade-up-2 mb-10 max-w-xl text-sm leading-8 text-ink-soft md:text-base">
+            {/* H1 は情緒的なコピーなので、直下の1行で「誰向けの何か」を言い切る。 */}
+            <p className="fade-up fade-up-2 mb-6 max-w-xl border-l-2 border-brand-accent pl-4 text-lede font-medium text-ink">
+              自治体の防災担当者向け。基地局が停止しても、避難所と現場の情報伝達を続けるオフライン通信システムです。
+            </p>
+            <p className="fade-up fade-up-2 mb-10 max-w-xl text-body text-ink-soft">
               通信インフラが途絶えた被災地でも、安否・物資・危険情報をつなぎ続ける。ADREN（アドレン）は、スマホを活かして現場の情報を止めない災害時通信基盤です。
             </p>
             <div className="fade-up fade-up-3 flex flex-col gap-3 sm:flex-row">
-              <PrimaryButton href="/contact">資料を請求する</PrimaryButton>
-              <GhostButton href="/technology">仕組みを見る</GhostButton>
+              <PrimaryButton href="/document">資料を見る（登録不要）</PrimaryButton>
+              <GhostButton href="/contact">導入について相談する</GhostButton>
             </div>
           </div>
           <aside className="fade-up fade-up-4 frame-ticks border border-line-soft bg-white p-8 shadow-[8px_8px_0_0_rgba(26,31,46,0.06)]">
-            <p className="mono mb-6 text-[10px] tracking-[0.2em] text-ink-soft">{"// 開発中の実験値"}</p>
+            <p className="mono mb-6 text-micro tracking-[0.2em] text-ink-soft">{"// 開発中の実験値"}</p>
             <div className="grid grid-cols-2 gap-4">
               {[
                 ["通信距離", "1", "km以上", "屋外実験時"],
@@ -56,16 +60,16 @@ export default function Home() {
                   key={label}
                   className="group border border-line-soft bg-paper p-4 transition-colors duration-300 hover:border-brand-accent"
                 >
-                  <p className="mono mb-2 text-[10px] tracking-[0.2em] text-ink-soft">{label}</p>
+                  <p className="mono mb-2 text-micro tracking-[0.2em] text-ink-soft">{label}</p>
                   <p className="mincho text-3xl leading-none transition-colors duration-300 group-hover:text-brand-accent">
                     {value}
                     <span className="ml-1 font-sans text-base text-ink-soft">{unit}</span>
                   </p>
-                  <p className="mt-1 text-[10px] text-ink-soft">{note}</p>
+                  <p className="mt-1 text-micro text-ink-soft">{note}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-6 border-t border-line-soft pt-4 text-[11px] leading-6 text-ink-soft">
+            <p className="mt-6 border-t border-line-soft pt-4 text-micro leading-6 text-ink-soft">
               いずれも開発中プロトタイプでの測定値です。第三者検証は受けていません。
             </p>
           </aside>
@@ -101,12 +105,12 @@ export default function Home() {
               ],
             ].map(([title, body], index) => (
               <article key={title} className="hover-card hover-card-accent border border-line-soft bg-white p-7">
-                <p className="mono mb-5 flex items-baseline justify-between text-[11px] tracking-[0.2em] text-brand-accent">
+                <p className="mono mb-5 flex items-baseline justify-between text-micro tracking-[0.2em] text-brand-accent">
                   PROBLEM 0{index + 1}
                   <span className="mincho text-4xl leading-none text-line">0{index + 1}</span>
                 </p>
                 <h3 className="mincho mb-4 text-xl leading-snug">{title}</h3>
-                <p className="text-sm leading-7 text-ink-soft">{body}</p>
+                <p className="text-body text-ink-soft">{body}</p>
               </article>
             ))}
           </div>
@@ -131,7 +135,7 @@ export default function Home() {
             }
             lede="スマートフォン同士をBLEで束ね、LoRaゲートウェイ経由で広域メッシュを形成。電話網が機能しなくても避難所間の情報伝達を維持します。"
           />
-          <p className="mt-6 max-w-4xl text-sm leading-8 text-white/75">
+          <p className="mt-6 max-w-4xl text-body text-white/75">
             ADRENは、スマホとBLEで接続する小型通信モジュールです。近距離はBLE、遠距離はLPWA
             (LoRa 920MHz)で中継し、ノード間をバケツリレー式に接続。基地局が使えない環境でも、情報を次のノードへ確実に届けます。
           </p>
@@ -174,12 +178,12 @@ export default function Home() {
               ],
             ].map(([feature, body], index) => (
               <article key={feature} className="group bg-paper p-8 transition-colors duration-300 hover:bg-white">
-                <p className="mono mb-3 flex items-center gap-3 text-[11px] tracking-[0.2em] text-brand-accent">
+                <p className="mono mb-3 flex items-center gap-3 text-micro tracking-[0.2em] text-brand-accent">
                   F.0{index + 1}
                   <span className="inline-block h-px w-0 bg-brand-accent transition-all duration-300 group-hover:w-8" />
                 </p>
                 <h3 className="mincho mb-3 text-2xl">{feature}</h3>
-                <p className="text-sm leading-7 text-ink-soft">{body}</p>
+                <p className="text-body text-ink-soft">{body}</p>
               </article>
             ))}
           </div>

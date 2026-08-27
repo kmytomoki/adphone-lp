@@ -20,7 +20,7 @@ export function ArchSvg({ dark }: ArchSvgProps) {
           <rect x="-20" y="-35" width="20" height="32" rx="3" fill="none" stroke={stroke} />
           <rect x="3" y="-30" width="20" height="32" rx="3" fill="none" stroke={stroke} />
           <rect x="-8" y="3" width="20" height="32" rx="3" fill="none" stroke={stroke} />
-          <text x="0" y="98" fill={stroke} textAnchor="middle" className="mono" fontSize="12">
+          <text x="0" y="98" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             スマートフォン群
           </text>
         </g>
@@ -30,7 +30,7 @@ export function ArchSvg({ dark }: ArchSvgProps) {
           <rect x="-42" y="-26" width="62" height="4" fill={soft} />
           <rect x="-42" y="-14" width="48" height="4" fill={soft} />
           <circle cx="34" cy="24" r="4" fill="#c8362d" />
-          <text x="0" y="98" fill={stroke} textAnchor="middle" className="mono" fontSize="12">
+          <text x="0" y="98" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             LoRaゲートウェイ
           </text>
         </g>
@@ -38,10 +38,10 @@ export function ArchSvg({ dark }: ArchSvgProps) {
         <g transform="translate(900, 210)">
           <circle r="60" fill="none" stroke="#c8362d" strokeDasharray="3 4" />
           <circle r="34" fill="none" stroke="#e85e54" />
-          <text x="0" y="4" fill="#c8362d" textAnchor="middle" className="mono" fontSize="12">
+          <text x="0" y="4" fill="#c8362d" textAnchor="middle" className="mono" fontSize="13">
             LPWA
           </text>
-          <text x="0" y="98" fill={stroke} textAnchor="middle" className="mono" fontSize="12">
+          <text x="0" y="98" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             広域メッシュ
           </text>
         </g>
@@ -49,7 +49,7 @@ export function ArchSvg({ dark }: ArchSvgProps) {
         <g transform="translate(1130, 210)">
           <polygon points="0,-38 -32,14 32,14" fill="none" stroke={stroke} />
           <rect x="-18" y="14" width="36" height="24" fill="none" stroke={stroke} />
-          <text x="0" y="90" fill={stroke} textAnchor="middle" className="mono" fontSize="12">
+          <text x="0" y="90" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             他避難所
           </text>
         </g>
@@ -66,7 +66,7 @@ export function ArchSvg({ dark }: ArchSvgProps) {
           <rect x="-16" y="-26" width="16" height="26" rx="2" fill="none" stroke={stroke} />
           <rect x="2" y="-22" width="16" height="26" rx="2" fill="none" stroke={stroke} />
           <rect x="-7" y="4" width="16" height="26" rx="2" fill="none" stroke={stroke} />
-          <text x="0" y="72" fill={stroke} textAnchor="middle" className="mono" fontSize="11">
+          <text x="0" y="72" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             スマートフォン群
           </text>
         </g>
@@ -76,7 +76,7 @@ export function ArchSvg({ dark }: ArchSvgProps) {
           <rect x="-32" y="-20" width="50" height="4" fill={soft} />
           <rect x="-32" y="-10" width="38" height="4" fill={soft} />
           <circle cx="28" cy="18" r="4" fill="#c8362d" />
-          <text x="0" y="52" fill={stroke} textAnchor="middle" className="mono" fontSize="11">
+          <text x="0" y="52" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             LoRaゲートウェイ
           </text>
         </g>
@@ -84,10 +84,10 @@ export function ArchSvg({ dark }: ArchSvgProps) {
         <g transform="translate(150, 435)">
           <circle r="48" fill="none" stroke="#c8362d" strokeDasharray="3 4" />
           <circle r="28" fill="none" stroke="#e85e54" />
-          <text x="0" y="4" fill="#c8362d" textAnchor="middle" className="mono" fontSize="11">
+          <text x="0" y="4" fill="#c8362d" textAnchor="middle" className="mono" fontSize="13">
             LPWA
           </text>
-          <text x="0" y="68" fill={stroke} textAnchor="middle" className="mono" fontSize="11">
+          <text x="0" y="68" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             広域メッシュ
           </text>
         </g>
@@ -95,7 +95,7 @@ export function ArchSvg({ dark }: ArchSvgProps) {
         <g transform="translate(150, 615)">
           <polygon points="0,-30 -26,10 26,10" fill="none" stroke={stroke} />
           <rect x="-14" y="10" width="28" height="20" fill="none" stroke={stroke} />
-          <text x="0" y="52" fill={stroke} textAnchor="middle" className="mono" fontSize="11">
+          <text x="0" y="52" fill={stroke} textAnchor="middle" className="mono" fontSize="13">
             他避難所
           </text>
         </g>

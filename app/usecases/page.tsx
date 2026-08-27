@@ -51,7 +51,7 @@ export default function UseCasesPage() {
           {["地震", "豪雨・水害", "孤立集落", "避難所運営"].map((tag) => (
             <span
               key={tag}
-              className="border border-line bg-white px-4 py-2 text-sm text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
+              className="border border-line bg-white px-4 py-2 text-body text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
             >
               {tag}
             </span>
@@ -67,23 +67,23 @@ export default function UseCasesPage() {
               className="hover-card grid gap-6 border border-line-soft bg-white p-6 md:grid-cols-2 md:p-8"
             >
               <div className={index % 2 === 0 ? "order-1" : "order-2 md:order-1"}>
-                <p className="mono mb-2 flex items-baseline gap-3 text-[11px] tracking-[0.2em] text-brand-accent">
+                <p className="mono mb-2 flex items-baseline gap-3 text-micro tracking-[0.2em] text-brand-accent">
                   SCENARIO 0{index + 1}
                   <span className="mincho text-3xl leading-none text-line">0{index + 1}</span>
                 </p>
                 <h2 className="mincho mb-4 text-3xl">{item.title}</h2>
                 <div className="space-y-3">
                   <div className="border-l-2 border-ink bg-paper-2 p-3">
-                    <p className="mono mb-1 text-[10px] tracking-[0.15em] text-ink-soft uppercase">課題</p>
-                    <p className="text-sm text-ink-soft">{item.problem}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft uppercase">課題</p>
+                    <p className="text-body text-ink-soft">{item.problem}</p>
                   </div>
                   <div className="border-l-2 border-brand-accent bg-paper p-3">
-                    <p className="mono mb-1 text-[10px] tracking-[0.15em] text-ink-soft uppercase">解決</p>
-                    <p className="text-sm text-ink-soft">{item.solution}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft uppercase">解決</p>
+                    <p className="text-body text-ink-soft">{item.solution}</p>
                   </div>
                   <div className="border-l-2 border-line bg-white p-3">
-                    <p className="mono mb-1 text-[10px] tracking-[0.15em] text-ink-soft uppercase">効果</p>
-                    <p className="text-sm text-ink-soft">{item.effect}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft uppercase">効果</p>
+                    <p className="text-body text-ink-soft">{item.effect}</p>
                   </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function UseCasesPage() {
                     className="object-cover"
                   />
                 </div>
-                <p className="mt-2 text-[11px] text-ink-soft">{item.imageNote}</p>
+                <p className="mt-2 text-micro text-ink-soft">{item.imageNote}</p>
               </div>
             </article>
           ))}

@@ -1,9 +1,30 @@
 import Link from "next/link";
 
-const columns = [
-  { title: "Product", items: ["概要", "仕様", "セキュリティ", "価格"] },
-  { title: "Resources", items: ["ユースケース", "技術ドキュメント", "研究論文", "FAQ"] },
-  { title: "Company", items: ["会社情報", "チーム", "お問い合わせ", "採用"] },
+// 実在するページだけを並べる。行き先の無い項目は置かない（ダミーリンクは信用を損なう）。
+const columns: { title: string; items: { label: string; href: string }[] }[] = [
+  {
+    title: "Product",
+    items: [
+      { label: "製品概要", href: "/product" },
+      { label: "技術構成", href: "/technology" },
+      { label: "ユースケース", href: "/usecases" },
+    ],
+  },
+  {
+    title: "Resources",
+    items: [
+      { label: "製品概要資料（登録不要）", href: "/document" },
+      { label: "セキュリティ設計", href: "/technology" },
+    ],
+  },
+  {
+    title: "Company",
+    items: [
+      { label: "会社情報・沿革", href: "/about" },
+      { label: "導入・実証のご相談", href: "/contact" },
+      { label: "プライバシーポリシー", href: "/privacy" },
+    ],
+  },
 ];
 
 export function Footer() {
@@ -14,37 +35,36 @@ export function Footer() {
           <p className="mincho text-2xl font-bold tracking-[0.05em]">
             AD<span className="text-brand-accent-soft">REN</span>
           </p>
-          <p className="mono mt-1 text-[10px] tracking-[0.2em] text-white/50">AD-HOC / DISASTER-RESILIENT / EMERGENCY NETWORK</p>
-          <p className="mt-4 max-w-xs text-sm leading-7 text-white/70">
+          <p className="mono mt-1 text-micro tracking-[0.2em] text-white/50">
+            AD-HOC / DISASTER-RESILIENT / EMERGENCY NETWORK
+          </p>
+          <p className="mt-4 max-w-xs text-body text-white/75">
             災害時、通信が途絶えても、情報は止めない。自治体のための分散型災害情報ネットワーク。
           </p>
         </div>
         {columns.map((col) => (
           <div key={col.title}>
-            <p className="mono mb-4 text-[11px] tracking-[0.2em] text-brand-accent-soft uppercase">{col.title}</p>
-            <ul className="space-y-2 text-sm text-white/70">
+            <p className="mono mb-3 text-micro tracking-[0.2em] text-brand-accent-soft uppercase">{col.title}</p>
+            <ul className="text-base text-white/75">
               {col.items.map((item) => (
-                <li key={item} className="transition-colors hover:text-white">
-                  {item}
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="flex min-h-11 items-center transition-colors hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
         ))}
       </div>
-      <div className="mx-auto mt-6 flex max-w-6xl flex-col gap-2 text-[10px] tracking-[0.15em] text-white/50 sm:flex-row sm:justify-between">
-        <span>© 2026 Rewave Technology</span>
-        <div className="flex gap-4">
-          <Link href="/contact" className="link-line transition-colors hover:text-white">
-            PRIVACY
-          </Link>
-          <Link href="/contact" className="link-line transition-colors hover:text-white">
-            TERMS
-          </Link>
-          <Link href="/contact" className="link-line transition-colors hover:text-white">
-            SECURITY
-          </Link>
-        </div>
+      <div className="mx-auto mt-4 flex max-w-6xl flex-col gap-1 text-micro tracking-[0.15em] text-white/60 sm:flex-row sm:items-center sm:justify-between">
+        <span className="flex min-h-11 items-center">© 2026 Rewave Technology</span>
+        <Link href="/privacy" className="link-line flex min-h-11 items-center transition-colors hover:text-white">
+          PRIVACY POLICY
+        </Link>
       </div>
     </footer>
   );

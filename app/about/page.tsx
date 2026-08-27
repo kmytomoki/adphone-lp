@@ -60,7 +60,7 @@ export default function AboutPage() {
       <section className="px-6 py-14 md:px-12">
         <div className="frame-ticks mx-auto max-w-6xl border-l-4 border-ink bg-paper-2 p-8">
           <h2 className="mincho mb-3 text-3xl">ミッション</h2>
-          <p className="max-w-4xl text-sm leading-8 text-ink-soft">
+          <p className="max-w-4xl text-body text-ink-soft">
             「通信の空白地帯を消す」を掲げ、災害時に使えなくなるスマホを再び情報インフラに変える。教育機関発のプロトタイプで終わらせず、自治体導入まで見据えた事業化を目指します。
           </p>
         </div>
@@ -70,7 +70,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 md:items-center">
           <div>
             <h2 className="mincho mb-4 text-3xl">ADRENが生まれた背景</h2>
-            <p className="text-sm leading-8 text-ink-soft">
+            <p className="text-body text-ink-soft">
               東日本大震災や能登半島地震で顕在化した通信途絶の課題に対し、私たちは「72時間の壁」を越える前に情報を届ける手段が必要だと考えました。Rewaveは高専で培った通信・AI・ソフトウェア技術を統合し、現場で機能する災害支援基盤を構築しています。
             </p>
           </div>
@@ -84,7 +84,7 @@ export default function AboutPage() {
                 className="object-cover"
               />
             </div>
-            <p className="mt-2 text-[11px] text-ink-soft">※ 生成AIによるイメージ図です</p>
+            <p className="mt-2 text-micro text-ink-soft">※ 生成AIによるイメージ図です</p>
           </div>
         </div>
       </section>
@@ -102,7 +102,7 @@ export default function AboutPage() {
                 className="object-cover"
               />
             </div>
-            <p className="mt-2 text-[11px] text-ink-soft">沖縄工業高等専門学校にて</p>
+            <p className="mt-2 text-micro text-ink-soft">沖縄工業高等専門学校にて</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {[
@@ -111,9 +111,9 @@ export default function AboutPage() {
               ["アプリ開発", "UX設計・オフライン機能実装"],
             ].map(([member, role]) => (
               <article key={member} className="hover-card border border-line-soft bg-white p-6">
-                <p className="mono mb-2 text-[10px] tracking-[0.15em] text-ink-soft">TEAM</p>
+                <p className="mono mb-2 text-micro tracking-[0.15em] text-ink-soft">TEAM</p>
                 <h3 className="mincho text-xl">{member}</h3>
-                <p className="mt-2 text-sm leading-7 text-ink-soft">{role}</p>
+                <p className="mt-2 text-body text-ink-soft">{role}</p>
               </article>
             ))}
           </div>
@@ -133,16 +133,16 @@ export default function AboutPage() {
                     : "hover-card border border-line-soft bg-white p-5"
                 }
               >
-                <p className="mono mb-2 text-[11px] tracking-[0.15em] text-brand-accent">{item.year}</p>
+                <p className="mono mb-2 text-micro tracking-[0.15em] text-brand-accent">{item.year}</p>
                 <h3 className={item.highlight ? "mincho text-2xl text-brand-accent" : "mincho text-xl text-ink"}>
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-7 text-ink-soft">{item.detail}</p>
+                <p className="mt-2 text-body text-ink-soft">{item.detail}</p>
                 <a
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="mono mt-3 inline-block text-[10px] tracking-[0.15em] text-ink-soft underline underline-offset-4 hover:text-brand-accent"
+                  className="mono mt-3 inline-block text-micro tracking-[0.15em] text-ink-soft underline underline-offset-4 hover:text-brand-accent"
                 >
                   主催者発表ページ ↗
                 </a>
@@ -153,18 +153,18 @@ export default function AboutPage() {
             {timeline.map((item) => (
               <div key={item.year} className="group relative mb-5">
                 <span className="absolute top-1.5 -left-[31px] h-2 w-2 rounded-full border border-ink bg-paper transition-colors duration-200 group-hover:border-brand-accent group-hover:bg-brand-accent" />
-                <p className="mono text-[11px] tracking-[0.15em] text-ink-soft">{item.year}</p>
+                <p className="mono text-micro tracking-[0.15em] text-ink-soft">{item.year}</p>
                 {item.href ? (
                   <a
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm text-ink underline underline-offset-4 hover:text-brand-accent"
+                    className="text-body text-ink underline underline-offset-4 hover:text-brand-accent"
                   >
                     {item.text} ↗
                   </a>
                 ) : (
-                  <p className="text-sm text-ink">{item.text}</p>
+                  <p className="text-body text-ink">{item.text}</p>
                 )}
               </div>
             ))}

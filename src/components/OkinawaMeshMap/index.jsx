@@ -465,15 +465,15 @@ export default function OkinawaMeshMap({
     <div ref={wrapRef} className="w-full">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-sm text-ink">沖縄本島 アドホックメッシュ伝搬シミュレーション</p>
-          <p className="mono mt-1 text-[10px] tracking-[0.15em] text-ink-soft">
+          <p className="text-base font-medium text-ink">沖縄本島 アドホックメッシュ伝搬シミュレーション</p>
+          <p className="mono mt-1 text-micro tracking-[0.15em] text-ink-soft">
             REACHED NODES: <span ref={reachedElRef} className="text-brand-accent">0 / 0</span>
           </p>
         </div>
         <button
           type="button"
           onClick={replay}
-          className="rounded-sm border border-line px-4 py-2 text-xs tracking-[0.08em] text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
+          className="min-h-11 rounded-sm border border-line px-4 py-2 text-base tracking-[0.04em] text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
         >
           那覇市から再生
         </button>
@@ -490,13 +490,13 @@ export default function OkinawaMeshMap({
       </div>
       <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
         {legend.map(([label, color]) => (
-          <span key={label} className="flex items-center gap-1.5 text-[11px] text-ink-soft">
+          <span key={label} className="flex items-center gap-1.5 text-micro text-ink-soft">
             <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
             {label}
           </span>
         ))}
       </div>
-      <p className="mt-2 text-center text-[11px] tracking-[0.05em] text-ink-soft">
+      <p className="mt-2 text-center text-base text-ink-soft">
         地図上をクリックすると、その地点を起点にメッシュ伝搬が広がります。
       </p>
     </div>

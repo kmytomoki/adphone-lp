@@ -20,7 +20,7 @@ export function PageHero({ eyebrow, title, lede }: PageHeroProps) {
       </p>
 
       <div className="relative mx-auto max-w-6xl">
-        <p className="fade-up mono mb-4 flex items-center gap-3 text-[11px] tracking-[0.2em] text-brand-accent uppercase">
+        <p className="fade-up mono mb-4 flex items-center gap-3 text-micro tracking-[0.2em] text-brand-accent uppercase">
           <span className="inline-block h-px w-8 bg-brand-accent" />
           {eyebrow}
         </p>

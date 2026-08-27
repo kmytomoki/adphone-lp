@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { CONTACT_SUBJECTS } from "@/lib/site";
 import { initialContactFormState } from "./form-state";
 import { submitContact } from "./actions";
 
 const FIELD_CLASS =
-  "w-full border border-line bg-paper px-3 py-2 text-sm transition-colors outline-none focus:border-ink focus:bg-white";
+  "w-full min-h-12 border border-line bg-paper px-4 py-3 text-base transition-colors outline-none focus:border-ink focus:bg-white";
 
 type TextFieldProps = {
   id: string;
@@ -19,7 +20,7 @@ type TextFieldProps = {
 function TextField({ id, label, type = "text", required, error }: TextFieldProps) {
   return (
     <label className="block" htmlFor={id}>
-      <span className="mb-1 block text-xs text-ink-soft">
+      <span className="mb-2 block text-base font-medium text-ink">
         {label}
         {required ? " *" : ""}
       </span>
@@ -33,7 +34,7 @@ function TextField({ id, label, type = "text", required, error }: TextFieldProps
         className={FIELD_CLASS}
       />
       {error ? (
-        <span id={`${id}-error`} className="mt-1 block text-xs text-brand-accent">
+        <span id={`${id}-error`} className="mt-2 block text-base text-brand-accent">
           {error}
         </span>
       ) : null}
@@ -46,7 +47,7 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <p className="text-sm leading-8 text-ink" role="status">
+      <p className="text-body text-ink" role="status">
         {state.message}
       </p>
     );
@@ -70,7 +71,7 @@ export function ContactForm() {
       <TextField id="email" label="メールアドレス" type="email" required error={state.fieldErrors.email} />
 
       <label className="block" htmlFor="subject">
-        <span className="mb-1 block text-xs text-ink-soft">お問い合わせ種別 *</span>
+        <span className="mb-2 block text-base font-medium text-ink">お問い合わせ種別 *</span>
         <select id="subject" name="subject" required defaultValue={CONTACT_SUBJECTS[0]} className={FIELD_CLASS}>
           {CONTACT_SUBJECTS.map((subject) => (
             <option key={subject} value={subject}>
@@ -79,21 +80,25 @@ export function ContactForm() {
           ))}
         </select>
         {state.fieldErrors.subject ? (
-          <span className="mt-1 block text-xs text-brand-accent">{state.fieldErrors.subject}</span>
+          <span className="mt-2 block text-base text-brand-accent">{state.fieldErrors.subject}</span>
         ) : null}
       </label>
 
       <label className="block" htmlFor="message">
-        <span className="mb-1 block text-xs text-ink-soft">ご質問・ご相談内容</span>
+        <span className="mb-2 block text-base font-medium text-ink">ご質問・ご相談内容</span>
         <textarea id="message" name="message" className={`${FIELD_CLASS} h-28`} />
       </label>
 
-      <p className="text-xs leading-6 text-ink-soft">
-        ご記入いただいた内容は、お問い合わせへの回答のためにのみ利用します。
+      <p className="text-body text-ink-soft">
+        ご記入いただいた内容は、お問い合わせへの回答のためにのみ利用します。取り扱いの詳細は
+        <Link href="/privacy" className="underline underline-offset-4 hover:text-brand-accent">
+          プライバシーポリシー
+        </Link>
+        をご確認ください。
       </p>
 
       {state.status === "error" ? (
-        <p role="alert" className="text-xs text-brand-accent">
+        <p role="alert" className="text-base font-medium text-brand-accent">
           {state.message}
         </p>
       ) : null}
@@ -101,7 +106,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-sm border border-ink bg-ink px-5 py-3 text-xs tracking-[0.08em] text-white uppercase transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-accent hover:shadow-[4px_4px_0_0_rgba(26,31,46,0.25)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:bg-ink disabled:hover:shadow-none"
+        className="min-h-12 rounded-sm border border-ink bg-ink px-6 py-4 text-base font-medium tracking-[0.04em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-accent hover:shadow-[4px_4px_0_0_rgba(26,31,46,0.25)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:bg-ink disabled:hover:shadow-none"
       >
         {pending ? "送信中..." : "送信する"}
       </button>

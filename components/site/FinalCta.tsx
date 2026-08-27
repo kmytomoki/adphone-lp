@@ -15,7 +15,7 @@ export function FinalCta() {
       </p>
 
       <div className="relative mx-auto max-w-3xl">
-        <p className="mono mb-5 flex items-center justify-center gap-3 text-[11px] tracking-[0.25em] text-brand-accent-soft uppercase">
+        <p className="mono mb-5 flex items-center justify-center gap-3 text-micro tracking-[0.25em] text-brand-accent-soft uppercase">
           <span className="inline-block h-px w-8 bg-brand-accent-soft" />
           GET STARTED / 05
           <span className="inline-block h-px w-8 bg-brand-accent-soft" />
@@ -25,18 +25,18 @@ export function FinalCta() {
           <br />
           あなたの自治体に。
         </h2>
-        <p className="mb-10 text-sm leading-8 text-white/70">
-          導入検討のための資料をお送りします。実証実験への参加や技術相談など、お気軽にお問い合わせください。
+        <p className="mb-10 text-body text-white/70">
+          製品概要はその場で読めます（登録不要）。実証実験への参加や技術相談は、担当者がご相談を承ります。
         </p>
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <PrimaryButton href="/contact" className="bg-brand-accent text-white hover:bg-brand-accent-soft">
-            資料請求
+          <PrimaryButton href="/document" className="bg-brand-accent text-white hover:bg-brand-accent-soft">
+            資料を見る（登録不要）
           </PrimaryButton>
           <GhostButton
             href="/contact"
             className="border-white/40 text-white hover:border-white hover:bg-white hover:text-ink"
           >
-            お問い合わせ
+            導入について相談する
           </GhostButton>
         </div>
       </div>

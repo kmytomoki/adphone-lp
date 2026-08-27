@@ -16,7 +16,7 @@ export function PrimaryButton({ href, children, className }: SiteButtonProps) {
     <Button
       asChild
       className={cn(
-        "group h-auto rounded-sm px-6 py-4 text-xs tracking-[0.08em] uppercase",
+        "group h-auto min-h-12 rounded-sm px-6 py-4 text-base font-medium tracking-[0.04em]",
         "bg-ink text-white transition-all duration-300 hover:bg-brand-accent",
         "hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(26,31,46,0.25)]",
         className
@@ -36,7 +36,7 @@ export function GhostButton({ href, children, className }: SiteButtonProps) {
       asChild
       variant="outline"
       className={cn(
-        "h-auto rounded-sm border-ink bg-transparent px-6 py-4 text-xs tracking-[0.08em] uppercase",
+        "h-auto min-h-12 rounded-sm border-ink bg-transparent px-6 py-4 text-base font-medium tracking-[0.04em]",
         "text-ink transition-all duration-300 hover:bg-ink hover:text-white",
         "hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_rgba(26,31,46,0.2)]",
         className
