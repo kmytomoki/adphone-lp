@@ -16,6 +16,25 @@ export const publicContact: {
   address: null,
 };
 
+/**
+ * 連絡先が空である理由。
+ *
+ * 自治体・企業の担当者は、電話も所在地も出ていない相手を上司に説明できない。
+ * ただし空欄の本当の理由は「隠している」ではなく「法人設立準備中で、公式ドメインの
+ * メールアドレスをまだ取得していない」であり、それは書けば済む。
+ * 沈黙は隠蔽に見えるが、事情の明示は誠実さとして読まれる。
+ *
+ * メールアドレスを取得したら publicContact.email を埋め、この定数を null にすること。
+ * 両方が同時に出ていると、準備中の話が残ったままになって不自然になる。
+ */
+export const CONTACT_STATUS: {
+  headline: string;
+  body: string;
+} | null = {
+  headline: "現在はお問い合わせフォームのみで承っています",
+  body: "法人設立の準備中で、公式メールアドレスの取得を進めています。取得までの間、電話・所在地は公開していません。ご連絡先はフォームにご記入いただいた宛先へお返しします。",
+};
+
 /** お問い合わせ種別。フォームの選択肢とサーバー側の検証で共用する。 */
 export const CONTACT_SUBJECTS = [
   "県・自治体の導入相談",
@@ -56,6 +75,38 @@ export const AUDIENCE_OPTIONS: readonly {
     subject: "共創・事業連携",
     usecasesHref: "/usecases#partners",
     documentAudience: "partners",
+  },
+];
+
+/**
+ * 自治体の総合防災訓練への参画状況。
+ *
+ * 自治体の防災担当にとっては、学生コンテストの受賞よりこちらのほうが重い事実になる。
+ * ただし「参加した」と「参加を準備している」を混ぜると一発で信用を失う領域なので、
+ * status を必ず添えて、読み手が現在地を誤解しないようにすること。
+ * 実施が完了したら status を "completed" にし、実施日と実施内容を追記する。
+ */
+export const FIELD_DEPLOYMENTS: readonly {
+  region: string;
+  title: string;
+  detail: string;
+  status: "preparing" | "completed";
+  statusLabel: string;
+}[] = [
+  {
+    region: "沖縄県",
+    title: "沖縄県総合防災訓練",
+    detail:
+      "被災市町村・医療拠点等における通信復旧訓練への参画を、沖縄工業高等専門学校として準備しています。",
+    status: "preparing",
+    statusLabel: "参加準備中",
+  },
+  {
+    region: "徳島県",
+    title: "徳島県総合防災訓練",
+    detail: "実証を目的とした参加を準備しています。実証内容と対象拠点は調整中です。",
+    status: "preparing",
+    statusLabel: "参加準備中",
   },
 ];
 

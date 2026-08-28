@@ -4,7 +4,8 @@ import { ArchSvg } from "@/components/site/ArchSvg";
 import { FinalCta } from "@/components/site/FinalCta";
 import { GhostButton, PrimaryButton } from "@/components/site/Buttons";
 import { SectionHead } from "@/components/site/SectionHead";
-import { AUDIENCE_OPTIONS, TRUST_AWARDS, contactHref } from "@/lib/site";
+import OkinawaMeshMap from "@/src/components/OkinawaMeshMap";
+import { AUDIENCE_OPTIONS, FIELD_DEPLOYMENTS, TRUST_AWARDS, contactHref } from "@/lib/site";
 
 const existingSystems = [
   {
@@ -29,16 +30,19 @@ const implementationSteps = [
     title: "対象業務を決める",
     body: "避難所間連絡、事業所の安否確認、既存システム連携など、通信を残したい業務と場所を整理します。",
     output: "対象シナリオ・拠点・評価項目",
+    duration: "1〜2ヶ月",
   },
   {
     title: "小規模に実証する",
     body: "数拠点で通信距離、建物や地形の影響、担当者の操作手順を確認し、導入判断に必要な記録を残します。",
     output: "通信結果・運用課題・改善案",
+    duration: "3〜6ヶ月",
   },
   {
     title: "訓練と運用に組み込む",
     body: "既存の防災訓練やBCP手順と接続し、保管、点検、担当交代を含む継続運用を設計します。",
     output: "運用手順・訓練計画・配備案",
+    duration: "次年度以降",
   },
 ];
 
@@ -62,6 +66,21 @@ const faqs = [
     question: "既存の防災サービスとの連携や共同実証は可能ですか？",
     answer:
       "可能です。防災情報システム、訓練サービス、通信機器などとの接続を想定し、データ連携範囲、役割分担、検証項目からご相談を承ります。",
+  },
+  {
+    question: "費用はどのくらいかかりますか。",
+    answer:
+      "現時点の想定として、端末は1台あたり4万円程度、庁舎側の集約装置は1式あたり40万円程度を見込んでいます。いずれも確定価格ではなく、構成・台数・設置条件により変わります。実証フェーズの費用は対象拠点数と検証項目により設計しますので、規模感からご相談ください。",
+  },
+  {
+    question: "どの予算区分で導入を検討できますか。",
+    answer:
+      "自治体では緊急防災・減災事業債の「防災情報システム」区分での整備を想定しています。同事業債は地方債充当率100%、元利償還金の70%が基準財政需要額に算入されます。ただし端末単体の購入は対象外で、庁舎側の集約装置と一体の情報伝達システムとして整備する構成が前提です。適用可否は事業内容と各自治体の状況により判断されるため、所管部局への確認とあわせて、実証の設計段階から一緒に整理します。",
+  },
+  {
+    question: "検討から導入までどのくらいかかりますか。",
+    answer:
+      "対象業務の整理に1〜2ヶ月、小規模な実証に3〜6ヶ月を目安としています。訓練や運用への組み込みは次年度以降の予算での実施を想定しており、年度をまたぐ計画としてご相談いただく形が多くなります。",
   },
   {
     question: "現在の開発・検証段階を教えてください。",
@@ -177,7 +196,7 @@ export default function Home() {
             ].map(([title, body]) => (
               <article key={title} className="hover-card hover-card-accent border border-line-soft bg-white p-7">
                 <h3 className="mincho mb-4 text-xl leading-snug">{title}</h3>
-                <p className="text-body text-ink-soft">{body}</p>
+                <p className="text-compact text-ink-soft">{body}</p>
               </article>
             ))}
           </div>
@@ -212,6 +231,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 仕様表の「1km」だけを見た読み手は、自分の市域を思い浮かべて「足りない」と判断する。
+          面が繋がる様子を先に見せて、1台あたりの距離ではなく中継で覆う話だと分からせる。 */}
+      <section id="mesh" className="scroll-mt-24 border-b border-line-soft bg-paper-2 px-6 py-20 md:px-12 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead
+            label="到達範囲"
+            title={
+              <>
+                1台では1km。
+                <br />
+                <em className="not-italic text-brand-accent">中継</em>すれば面になる。
+              </>
+            }
+            lede="1ノードあたりの通信距離は屋外実験で1km以上です。重要なのはこの数字単体ではなく、ノード同士が中継して面を覆うことです。基地局が落ちた状態から情報が広がる様子を、沖縄本島を例に示します。"
+          />
+          <div className="frame-ticks mt-10 border border-line-soft bg-white p-4 md:p-8">
+            <OkinawaMeshMap nodeCount={80} edgeRadius={75} hopDelay={420} autoPlay />
+          </div>
+          <p className="mt-5 text-base leading-7 text-ink-soft">
+            ※ ノード配置は説明用のシミュレーションです。実際に必要な台数は、対象地域の地形、建物、
+            配備できる拠点数によって変わります。対象地域を伺えば概算をお出しします。
+          </p>
+        </div>
+      </section>
+
       <section className="px-6 py-20 md:px-12 md:py-28">
         <div className="mx-auto max-w-6xl">
           <SectionHead
@@ -232,11 +276,11 @@ export default function Home() {
                 <h3 className="mincho text-2xl">{system.name}</h3>
                 <div className="mt-5 border-t border-line-soft pt-5">
                   <p className="mb-1 text-base font-medium text-ink">主な役割</p>
-                  <p className="text-body text-ink-soft">{system.role}</p>
+                  <p className="text-compact text-ink-soft">{system.role}</p>
                 </div>
                 <div className="mt-5 border-l-2 border-brand-accent bg-paper p-4">
                   <p className="mb-1 text-base font-medium text-ink">ADRENが補う範囲</p>
-                  <p className="text-body text-ink-soft">{system.complement}</p>
+                  <p className="text-compact text-ink-soft">{system.complement}</p>
                 </div>
               </article>
             ))}
@@ -281,7 +325,7 @@ export default function Home() {
             ].map(([feature, body]) => (
               <article key={feature} className="group bg-paper p-8 transition-colors duration-300 hover:bg-white">
                 <h3 className="mincho mb-3 text-2xl">{feature}</h3>
-                <p className="text-body text-ink-soft">{body}</p>
+                <p className="text-compact text-ink-soft">{body}</p>
               </article>
             ))}
           </div>
@@ -304,9 +348,12 @@ export default function Home() {
           <ol className="mt-10 grid gap-4 md:grid-cols-3">
             {implementationSteps.map((step, index) => (
               <li key={step.title} className="frame-ticks border border-line-soft bg-white p-7">
-                <p className="mono text-micro tracking-[0.2em] text-brand-accent">ステップ {index + 1}</p>
+                <div className="flex flex-wrap items-center justify-between gap-x-4">
+                  <p className="mono text-micro tracking-[0.2em] text-brand-accent">ステップ {index + 1}</p>
+                  <p className="mono text-micro tracking-[0.15em] text-ink-soft">目安 {step.duration}</p>
+                </div>
                 <h3 className="mincho mt-3 text-2xl">{step.title}</h3>
-                <p className="mt-3 text-body text-ink-soft">{step.body}</p>
+                <p className="mt-3 text-compact text-ink-soft">{step.body}</p>
                 <div className="mt-5 border-t border-line-soft pt-4">
                   <p className="text-base font-medium text-ink">確認する成果物</p>
                   <p className="mt-1 text-base leading-7 text-ink-soft">{step.output}</p>
@@ -314,6 +361,60 @@ export default function Home() {
               </li>
             ))}
           </ol>
+
+          {/* 自治体の担当者の実務は「買う」ではなく「予算要求書と稟議書を書く」。
+              桁と財源の枠が無いと着手できないので、確定価格でなくても必ず出す。
+              ただしここは外に出る数字なので、確定と未確定の線を必ず引くこと。 */}
+          <div className="mt-10 border border-line-soft bg-white">
+            <div className="border-b border-line-soft px-6 py-5">
+              <h3 className="mincho text-2xl">費用と財源の目安</h3>
+              <p className="mt-2 text-compact text-ink-soft">
+                予算要求の桁感をつかむための現時点の想定です。確定価格ではなく、構成・台数・設置条件により変わります。
+              </p>
+            </div>
+            <dl className="grid gap-px bg-line-soft md:grid-cols-3">
+              {[
+                {
+                  label: "端末（1台あたり）",
+                  value: "4万円程度",
+                  note: "スマートフォンに接続する通信モジュール本体。量産規模により変動します。",
+                },
+                {
+                  label: "庁舎側の集約装置",
+                  value: "40万円程度／式",
+                  note: "端末からの情報を受信・集約する装置。設置・現地調整の工数は別途です。",
+                },
+                {
+                  label: "実証フェーズ",
+                  value: "個別にご相談",
+                  note: "対象拠点数と検証項目により設計します。まず規模感からご相談ください。",
+                },
+              ].map((item) => (
+                <div key={item.label} className="bg-white p-6">
+                  <dt className="mono text-micro tracking-[0.15em] text-ink-soft">{item.label}</dt>
+                  <dd className="mincho mt-2 text-2xl text-ink">{item.value}</dd>
+                  <dd className="mt-2 text-compact text-ink-soft">{item.note}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="border-t border-line-soft bg-paper p-6">
+              <p className="text-base font-medium text-ink">想定している財源の枠</p>
+              <p className="mt-2 text-compact text-ink-soft">
+                自治体の場合、<strong className="font-medium text-ink">緊急防災・減災事業債</strong>の
+                「防災情報システム」区分での整備を想定しています。同事業債は地方債充当率100%、元利償還金の70%が
+                基準財政需要額に算入され、事業期間は令和12年度まで延長されています。
+              </p>
+              <p className="mt-3 text-compact text-ink-soft">
+                ただし<strong className="font-medium text-ink">端末単体の購入は同事業債の対象になりません</strong>。
+                庁舎側の集約装置と一体の情報伝達システムとして整備する構成が前提になります。この点は導入の形に直接関わるため、
+                実証の設計段階から一緒に整理します。
+              </p>
+              <p className="mt-3 text-base leading-7 text-ink-soft">
+                ※ 財源の区分と適用可否は、対象事業の内容と各自治体の状況により判断されます。上記は制度資料に基づく当社の想定であり、
+                所管官庁の確認を経たものではありません。実際の起債可否は必ず所管部局にご確認ください。
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -327,8 +428,31 @@ export default function Home() {
                 <em className="not-italic text-brand-accent">公開できる範囲</em>で示す。
               </>
             }
-            lede="沖縄工業高等専門学校発のチームが、プロトタイプの実装・屋外実験・コンテスト評価を積み重ねています。数値や受賞内容は主催者発表に基づき、裏取りできる形で掲載しています。"
+            lede="沖縄工業高等専門学校発のチームが、プロトタイプの実装・屋外実験・自治体訓練での実証準備を進めています。実施済みの事実と、これから実施する予定は、区別して掲載しています。"
           />
+
+          {/* 自治体の担当者にとっては、学生コンテストの受賞より訓練参画のほうが重い。
+              ただし「準備中」を「実績」に見せた瞬間に信用を失うため、状態ラベルは必ず出す。 */}
+          <div className="mt-10 border border-line-soft bg-white">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line-soft px-6 py-4">
+              <h3 className="mincho text-2xl">自治体の防災訓練での実証</h3>
+              <p className="text-base text-ink-soft">いずれも参加を準備中で、実施は完了していません</p>
+            </div>
+            <ul className="grid gap-px bg-line-soft md:grid-cols-2">
+              {FIELD_DEPLOYMENTS.map((item) => (
+                <li key={item.title} className="bg-white p-6">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="mono text-micro tracking-[0.15em] text-ink-soft">{item.region}</span>
+                    <span className="border border-notice bg-notice-wash px-2 py-0.5 text-micro font-medium text-notice">
+                      {item.statusLabel}
+                    </span>
+                  </div>
+                  <p className="mincho mt-2 text-xl">{item.title}</p>
+                  <p className="mt-2 text-compact text-ink-soft">{item.detail}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
             <div>
               <div className="relative aspect-[883/554] overflow-hidden border border-line-soft bg-paper">
@@ -377,9 +501,13 @@ export default function Home() {
                 href="/about"
                 className="group relative z-10 flex min-h-44 flex-col justify-center border border-line-soft bg-white p-5 transition-colors hover:border-brand-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent"
               >
-                <p className="text-base font-medium text-ink">現在の段階</p>
-                <p className="mt-2 text-body text-ink-soft">
-                  開発中のプロトタイプです。屋外実験で1km以上の通信を確認していますが、第三者検証は未実施です。
+                {/* 「第三者検証は未実施」はFAQに1箇所だけ置く。
+                    同じ留保を画面のあちこちで繰り返すと、誠実さではなく不安として伝わる。
+                    ここでは代わりに「何が確認済みか」を具体的に書く。 */}
+                <p className="text-base font-medium text-ink">確認できていること</p>
+                <p className="mt-2 text-compact text-ink-soft">
+                  屋外実験で1km以上の通信、オフラインでの地図表示と経路探索、端末間でのメッセージ中継。
+                  開発中のプロトタイプとしての段階です。
                 </p>
                 <span className="mt-4 inline-flex min-h-11 items-center text-base font-medium text-brand-accent group-hover:text-ink">
                   会社情報・沿革を見る →
@@ -418,12 +546,19 @@ export default function Home() {
               <details key={item.question} className="group border-b border-line">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent">
                   <span className="mincho text-xl leading-8 text-ink">{item.question}</span>
-                  <span
+                  {/* 全角「＋」は字幅の中で字面が偏るため、回転させると中心がずれる。
+                      SVGなら viewBox の中心で正確に回る。 */}
+                  <svg
                     aria-hidden
-                    className="text-2xl leading-none text-brand-accent transition-transform group-open:rotate-45"
+                    viewBox="0 0 24 24"
+                    className="size-6 flex-none text-brand-accent transition-transform duration-300 group-open:rotate-45"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="square"
                   >
-                    ＋
-                  </span>
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
                 </summary>
                 <p className="max-w-4xl pb-6 pr-10 text-body text-ink-soft">{item.answer}</p>
               </details>
