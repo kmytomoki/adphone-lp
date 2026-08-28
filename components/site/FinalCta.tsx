@@ -15,7 +15,8 @@ export function FinalCta() {
       </p>
 
       <div className="relative mx-auto max-w-3xl">
-        <p className="mono mb-5 flex items-center justify-center gap-3 text-micro tracking-[0.25em] text-brand-accent-soft">          <span className="inline-block h-px w-8 bg-brand-accent-soft" />
+        <p className="mono mb-5 flex items-center justify-center gap-3 text-micro tracking-[0.25em] text-brand-accent-soft">
+          <span className="inline-block h-px w-8 bg-brand-accent-soft" />
           次のステップ          <span className="inline-block h-px w-8 bg-brand-accent-soft" />
         </p>
         <h2 className="mincho mb-6 text-3xl leading-tight md:text-5xl">

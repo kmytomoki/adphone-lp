@@ -9,13 +9,25 @@
      ADRENアプリ本体が「本文16px以上・見出し20px以上」を掲げているため、
      LP側も同じ基準を満たす。読み手は自治体の防災担当（40〜60代中心）。
      text-sm(14px)/text-xs(12px) を本文やボタンに使わないこと。ボタンは text-base(16px)。
-     text-micro(12px) がサイト全体の最小サイズで、mono の見出しラベル専用。 */
+     text-micro(12px) がサイト全体の最小サイズで、mono の見出しラベル専用。
+
+     行間は用途で2系統に分ける。日本語は行間を広げすぎると行同士の結びつきが切れて
+     視線が迷うため、2〜3行で終わるカード内の短文には text-compact(1.7) を使う。
+     text-body(1.85) はリード文・FAQ回答・資料本文など、続けて読ませる長文向け。
+
+     名前に注意。text-* のユーティリティ名前空間は font-size(--text-*) と
+     色(--color-*) で共有されている。shadcn 側に --color-card があるため、
+     このトークンを --text-card と名付けると text-card が色ユーティリティとして
+     解決され、font-size と line-height が黙って効かなくなる（実際に踏んだ）。
+     --color-* 側に無い名前を選ぶこと。 */
   --text-micro: 0.75rem;
   --text-micro--line-height: 1.6;
+  --text-compact: 1.0625rem;
+  --text-compact--line-height: 1.7;
   --text-body: 1.0625rem;
-  --text-body--line-height: 1.9;
+  --text-body--line-height: 1.85;
   --text-lede: 1.125rem;
-  --text-lede--line-height: 1.9;
+  --text-lede--line-height: 1.85;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -30,6 +42,10 @@
   --color-line-soft: var(--line-soft);
   --color-brand-accent: var(--brand-accent);
   --color-brand-accent-soft: var(--brand-accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-wash: var(--danger-wash);
+  --color-notice: var(--notice);
+  --color-notice-wash: var(--notice-wash);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -77,6 +93,16 @@
   --line-soft: #e8e4dc;
   --brand-accent: #c8362d;
   --brand-accent-soft: #e85e54;
+
+  /* セマンティックカラー。ブランド色とは必ず別に保つこと。
+     brand-accent は見出しの強調・矢印・コーナーマークなど装飾で全面に散るため、
+     エラーや危険を同じ赤で示すと、実際の警告が装飾に埋もれて読み飛ばされる。
+     danger は brand-accent より暗く彩度を落としてあり、装飾の赤と区別できる。
+     色だけに意味を持たせず、必ずアイコンか背景色と併用すること。 */
+  --danger: #a81f27;
+  --danger-wash: #fbecec;
+  --notice: #8a5a0c;
+  --notice-wash: #fbf3e2;
   --background: var(--paper);
   --foreground: var(--ink);
   --card: oklch(1 0 0);
@@ -221,6 +247,15 @@
     border-color: var(--brand-accent);
   }
 
+  /* カードが10枚以上並ぶ一覧ページ用。カーソルを動かすたびにページ全体が
+     跳ねるのを避けるため、移動量を殺して境界と面の変化だけで反応させる。 */
+  .hover-card-quiet:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--ink);
+    background-color: var(--paper);
+  }
+
   /* Crop-mark style corner ticks */
   .frame-ticks {
     position: relative;
@@ -345,7 +380,20 @@
     font-size: 0.7em;
     word-break: break-all;
   }
+  /* 紙で回覧されたときに、何ページ目かと出所が分かるようにする。
+     @page のマージンボックスは Chrome / Edge が対応。未対応ブラウザでは
+     資料末尾のフッター（DocumentView）が同じ情報を担保する。 */
   @page {
-    margin: 14mm;
+    margin: 16mm 14mm;
+    @bottom-center {
+      content: counter(page) " / " counter(pages);
+      font-size: 9pt;
+      color: #4a5060;
+    }
+    @bottom-right {
+      content: "ADREN / Rewave Technology";
+      font-size: 8pt;
+      color: #4a5060;
+    }
   }
 }

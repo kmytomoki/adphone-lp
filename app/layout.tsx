@@ -10,12 +10,16 @@ import { Nav } from "@/components/site/Nav";
 // <link rel="preload"> が head に並び、初回表示が極端に遅くなる。
 // preload を切ると、ブラウザは実際に使う文字が含まれるサブセットだけを取得する。
 // weight は実際にページで使われているものだけに絞ってある。
+// fallback には日本語フォントを明示する。next/font の自動フォールバックは
+// Arial のメトリクスを基準にするため、日本語の字幅とは合わず、swap 前後で
+// レイアウトがずれる。OS標準の日本語フォントを先に置いて、ずれを小さくする。
 const shipporiMincho = Shippori_Mincho({
   subsets: ["latin"],
   weight: ["400", "700", "800"],
   variable: "--font-mincho",
   preload: false,
   display: "swap",
+  fallback: ["Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", "serif"],
 });
 const ibmPlexSansJp = IBM_Plex_Sans_JP({
   subsets: ["latin"],
@@ -23,6 +27,7 @@ const ibmPlexSansJp = IBM_Plex_Sans_JP({
   variable: "--font-sans",
   preload: false,
   display: "swap",
+  fallback: ["Hiragino Sans", "Yu Gothic UI", "Meiryo", "sans-serif"],
 });
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
