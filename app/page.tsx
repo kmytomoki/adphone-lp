@@ -4,6 +4,7 @@ import { ArchSvg } from "@/components/site/ArchSvg";
 import { FinalCta } from "@/components/site/FinalCta";
 import { GhostButton, PrimaryButton } from "@/components/site/Buttons";
 import { SectionHead } from "@/components/site/SectionHead";
+import { UsageSteps } from "@/components/site/UsageSteps";
 import OkinawaMeshMap from "@/src/components/OkinawaMeshMap";
 import { AUDIENCE_OPTIONS, FIELD_DEPLOYMENTS, TRUST_AWARDS, contactHref } from "@/lib/site";
 
@@ -199,6 +200,27 @@ export default function Home() {
                 <p className="text-compact text-ink-soft">{body}</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 構成図（ArchSvg）の前に、物としての使い方を置く。
+          仕組みの説明から入ると、初見の読み手は自分が何をするのか想像できないまま離脱する。 */}
+      <section className="border-y border-line-soft bg-paper-2 px-6 py-20 md:px-12 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <SectionHead
+            label="使い方"
+            title={
+              <>
+                持ち歩いて、つないで、
+                <br />
+                <em className="not-italic text-brand-accent">送るだけ</em>。
+              </>
+            }
+            lede="専用の無線機を覚え直す必要はありません。手持ちのスマートフォンに小さな端末をつなぐだけで、携帯電話が使えない場所でも連絡ができるようになります。"
+          />
+          <div className="mt-10">
+            <UsageSteps />
           </div>
         </div>
       </section>

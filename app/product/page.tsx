@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FinalCta } from "@/components/site/FinalCta";
 import { PageHero } from "@/components/site/PageHero";
+import { UsageSteps } from "@/components/site/UsageSteps";
 
 export const metadata: Metadata = {
   title: "製品概要",
@@ -57,6 +58,25 @@ export default function ProductPage() {
         title="スマホを活かして通信を復活させる、ADREN"
         lede="ADRENはスマートフォンとBLEで接続する通信モジュールです。基地局停止時にも、LPWAで端末から端末へ現場情報を中継します。"
       />
+
+      {/* 仕様や構成より先に「何をする物なのか」を置く。
+          初めて見た人は、BLE接続の小型モジュールと言われても手元の絵が浮かばない。 */}
+      <section className="border-b border-line-soft bg-paper-2 px-6 py-14 md:px-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 max-w-3xl">
+            <p className="mono mb-3 flex items-center gap-3 text-micro tracking-[0.2em] text-brand-accent">
+              <span className="inline-block h-px w-6 bg-brand-accent" />
+              使い方
+            </p>
+            <h2 className="mincho text-3xl md:text-4xl">持ち歩いて、つないで、送るだけ。</h2>
+            <p className="mt-3 text-body text-ink-soft">
+              専用の無線機を覚え直す必要はありません。手持ちのスマートフォンに小さな端末をつなぐだけで、
+              携帯電話が使えない場所でも連絡ができるようになります。
+            </p>
+          </div>
+          <UsageSteps />
+        </div>
+      </section>
 
       <section className="px-6 py-14 md:px-12">
         <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-8 text-center md:p-16">
