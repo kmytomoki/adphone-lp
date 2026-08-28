@@ -16,6 +16,7 @@ import {
   NODE_IDLE,
   NODE_RELAY,
   NODE_SOURCE,
+  PX_PER_KM,
   RIPPLE_COLOR,
   SEA_COLOR,
   toCanvasPoint,
@@ -26,8 +27,8 @@ import { usePropagation } from "./usePropagation";
 const LAND_ALPHA_THRESHOLD = 40;
 
 export default function OkinawaMeshMap({
-  nodeCount = 80,
-  edgeRadius = 75,
+  nodeCount = 14,
+  edgeRadius = 18,
   hopDelay = 420,
   autoPlay = true,
 }) {
@@ -52,7 +53,17 @@ export default function OkinawaMeshMap({
   const [baseDown, setBaseDown] = useState(false);
   const [showOutageText, setShowOutageText] = useState(false);
 
-  const graph = useNodeGraph({ nodeCount, edgeRadius, width, height, landMask });
+  const graph = useNodeGraph({
+    nodeCount,
+    edgeRadius,
+    width,
+    height,
+    landMask,
+    // ノード間隔は実寸で約1km。仕様表の「1ノードあたり1km以上」と画面上の
+    // 距離を一致させ、図と数字が食い違わないようにしている。
+    spacingPx: PX_PER_KM,
+    origin: CITIES[0],
+  });
   const { scheduleFromSource } = usePropagation({
     adjacency: graph.adjacency,
     hopDelay,
@@ -197,12 +208,12 @@ export default function OkinawaMeshMap({
     [height, width]
   );
 
-  const startFromNaha = useCallback(() => {
-    const naha = cityCanvasPoints.find((c) => c.name === "那覇市");
-    if (!naha) return;
-    const id = nearestNodeId(naha.x, naha.y);
-    if (id !== null) startPropagationFrom(id);
-  }, [cityCanvasPoints, nearestNodeId, startPropagationFrom]);
+  // 列の端から流す。以前は那覇市を起点にしていたが、表示範囲を名護市に
+  // 絞ったので画面外の地点は参照できない。
+  const startFromChainEnd = useCallback(() => {
+    if (graph.nodes.length === 0) return;
+    startPropagationFrom(0);
+  }, [graph.nodes.length, startPropagationFrom]);
 
   // Animation loop
   useEffect(() => {
@@ -238,7 +249,7 @@ export default function OkinawaMeshMap({
       if (baseDown) return;
       const bx = BASE_STATION.nx * width;
       const by = BASE_STATION.ny * height;
-      const radius = 220;
+      const radius = 130;
 
       ctx.save();
       ctx.fillStyle = "rgba(55,138,221,0.10)";
@@ -326,7 +337,7 @@ export default function OkinawaMeshMap({
           ripplesRef.current = ripplesRef.current.filter((r) => r.alpha > 0.01);
           ripplesRef.current.forEach((ring) => {
             if (now < ring.delayUntil) return;
-            ring.r = Math.min(ring.r + 2.2, 240);
+            ring.r = Math.min(ring.r + 1.6, 150);
             ring.alpha *= 0.982;
             ctx.beginPath();
             ctx.arc(spX, spY, ring.r, 0, Math.PI * 2);
@@ -381,6 +392,31 @@ export default function OkinawaMeshMap({
         reachedElRef.current.textContent = `${reached} / ${runtime.nodes.length}`;
       }
 
+      // 縮尺。1ホップ約1kmという主張を、読み手が絵の上で確かめられるようにする。
+      // これが無いと、ノード間隔が実距離のどれくらいなのか判断できない。
+      {
+        const barKm = 5;
+        const barPx = barKm * PX_PER_KM;
+        const x0 = 16;
+        const y0 = height - 22;
+        ctx.save();
+        ctx.strokeStyle = "rgba(26,31,46,0.65)";
+        ctx.fillStyle = "rgba(26,31,46,0.75)";
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(x0, y0 - 4);
+        ctx.lineTo(x0, y0);
+        ctx.lineTo(x0 + barPx, y0);
+        ctx.lineTo(x0 + barPx, y0 - 4);
+        ctx.stroke();
+        ctx.font = "11px 'Hiragino Sans', 'Yu Gothic', sans-serif";
+        ctx.textAlign = "left";
+        ctx.fillText(`${barKm} km`, x0, y0 + 13);
+        ctx.textAlign = "right";
+        ctx.fillText("ノード間隔 約1km", width - 16, y0 + 13);
+        ctx.restore();
+      }
+
       if (showOutageText) {
         ctx.save();
         ctx.fillStyle = "rgba(200,54,45,0.94)";
@@ -420,7 +456,7 @@ export default function OkinawaMeshMap({
             setBaseDown(true);
             setShowOutageText(true);
             const t = setTimeout(() => {
-              startFromNaha();
+              startFromChainEnd();
               setShowOutageText(false);
             }, 600);
             pendingTimersRef.current.push(t);
@@ -432,7 +468,7 @@ export default function OkinawaMeshMap({
     observer.observe(wrapRef.current);
     observerRef.current = observer;
     return () => observer.disconnect();
-  }, [autoPlay, graph.nodes.length, reducedMotion, startFromNaha]);
+  }, [autoPlay, graph.nodes.length, reducedMotion, startFromChainEnd]);
 
   useEffect(
     () => () => {
@@ -460,11 +496,11 @@ export default function OkinawaMeshMap({
     setBaseDown(true);
     setShowOutageText(true);
     const t = setTimeout(() => {
-      startFromNaha();
+      startFromChainEnd();
       setShowOutageText(false);
     }, 600);
     pendingTimersRef.current.push(t);
-  }, [reducedMotion, startFromNaha]);
+  }, [reducedMotion, startFromChainEnd]);
 
   const legend = [
     ["発信源", NODE_SOURCE],

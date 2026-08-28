@@ -263,18 +263,28 @@ export default function Home() {
               <>
                 1台では1km。
                 <br />
-                <em className="not-italic text-brand-accent">中継</em>すれば面になる。
+                <em className="not-italic text-brand-accent">中継</em>すれば、その先へ。
               </>
             }
-            lede="1ノードあたりの通信距離は屋外実験で1km以上です。重要なのはこの数字単体ではなく、ノード同士が中継して面を覆うことです。基地局が落ちた状態から情報が広がる様子を、沖縄本島を例に示します。"
+            lede="1ノードあたりの通信距離は屋外実験で1km以上です。重要なのはこの数字単体ではなく、ノード同士が中継して情報を先へ運べることです。名護市を例に、基地局が停止した状態から情報が伝わる様子を示します。"
           />
           <div className="frame-ticks mt-10 border border-line-soft bg-white p-4 md:p-8">
-            <OkinawaMeshMap nodeCount={80} edgeRadius={75} hopDelay={420} autoPlay />
+            <OkinawaMeshMap nodeCount={14} hopDelay={420} autoPlay />
           </div>
-          <p className="mt-5 text-base leading-7 text-ink-soft">
-            ※ ノード配置は説明用のシミュレーションです。実際に必要な台数は、対象地域の地形、建物、
-            配備できる拠点数によって変わります。対象地域を伺えば概算をお出しします。
-          </p>
+          <div className="mt-5 border-l-2 border-line bg-paper-2 p-5">
+            <p className="text-base font-medium text-ink">この図が示していること／示していないこと</p>
+            <p className="mt-2 text-compact text-ink-soft">
+              14台を約1km間隔で配置した場合の想定です。図の縮尺とノード間隔は一致させてあります。
+              <strong className="font-medium text-ink">
+                この台数で覆えるのは市内の一部の区間であり、名護市の全域ではありません。
+              </strong>
+              市街地や集落を面で覆うには、これより大幅に多い台数が必要になります。
+            </p>
+            <p className="mt-3 text-base leading-7 text-ink-soft">
+              ※ ノードの配置は地形に沿わせた説明用のシミュレーションで、実際の配備計画ではありません。
+              必要な台数は対象地域の地形、建物、配備できる拠点によって変わります。対象地域を伺えば概算をお出しします。
+            </p>
+          </div>
         </div>
       </section>
 

@@ -229,8 +229,12 @@ export function TechnologyView() {
 
           <section className="px-6 pb-20 md:px-12">
             <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-4 md:p-8">
-              <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft">沖縄メッシュ通信デモ</h2>
-              <OkinawaMeshMap nodeCount={80} edgeRadius={75} hopDelay={420} autoPlay />
+              <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft">中継デモ（名護市）</h2>
+              <p className="mb-4 text-compact text-ink-soft">
+                14台を約1km間隔で配置した場合の想定です。図の縮尺とノード間隔は一致させています。
+                この台数で覆えるのは市内の一部の区間で、名護市の全域ではありません。
+              </p>
+              <OkinawaMeshMap nodeCount={14} hopDelay={420} autoPlay />
             </div>
           </section>
         </div>
