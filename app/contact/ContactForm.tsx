@@ -9,6 +9,23 @@ import { submitContact } from "./actions";
 const FIELD_CLASS =
   "w-full min-h-12 border border-line bg-paper px-4 py-3 text-base transition-colors outline-none focus:border-ink focus:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent";
 
+// エラーは brand-accent（見出しや矢印にも使う赤）ではなく danger で出す。
+// 装飾の赤とエラーの赤が同じだと、実際の警告が装飾に埋もれる。
+// 色だけに意味を持たせないよう、アイコンと背景も併用する。
+function FieldError({ id, children }: { id: string; children: React.ReactNode }) {
+  return (
+    <span
+      id={id}
+      className="mt-2 flex items-start gap-2 border-l-2 border-danger bg-danger-wash px-3 py-2 text-base text-danger"
+    >
+      <svg aria-hidden viewBox="0 0 20 20" className="mt-1 size-4 flex-none" fill="currentColor">
+        <path d="M10 1.5 19 18H1L10 1.5Zm0 5.5a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm0 8.5a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Z" />
+      </svg>
+      <span>{children}</span>
+    </span>
+  );
+}
+
 type TextFieldProps = {
   id: string;
   label: string;
@@ -35,11 +52,7 @@ function TextField({ id, label, type = "text", autoComplete, required, error }: 
         aria-describedby={error ? `${id}-error` : undefined}
         className={FIELD_CLASS}
       />
-      {error ? (
-        <span id={`${id}-error`} className="mt-2 block text-base text-brand-accent">
-          {error}
-        </span>
-      ) : null}
+      {error ? <FieldError id={`${id}-error`}>{error}</FieldError> : null}
     </label>
   );
 }
@@ -47,11 +60,30 @@ function TextField({ id, label, type = "text", autoComplete, required, error }: 
 export function ContactForm({ defaultSubject }: { defaultSubject?: ContactSubject }) {
   const [state, formAction, pending] = useActionState(submitContact, initialContactFormState);
 
+  // 送信後に一行だけ返して終わると、読み手はページを閉じるしかない。
+  // 返信を待つ間に読めるものへ繋ぐ。
   if (state.status === "success") {
     return (
-      <p className="text-body text-ink" role="status">
-        {state.message}
-      </p>
+      <div role="status" className="border-l-2 border-ink bg-paper p-6">
+        <p className="text-body text-ink">{state.message}</p>
+        <p className="mt-4 text-compact text-ink-soft">
+          ご返信をお待ちいただく間に、製品概要資料をご覧いただけます。登録は不要です。
+        </p>
+        <div className="mt-4 flex flex-wrap gap-x-6">
+          <Link
+            href="/document"
+            className="flex min-h-11 items-center text-base text-brand-accent underline underline-offset-4 hover:text-ink"
+          >
+            製品概要資料を読む
+          </Link>
+          <Link
+            href="/usecases"
+            className="flex min-h-11 items-center text-base text-brand-accent underline underline-offset-4 hover:text-ink"
+          >
+            活用例を見る
+          </Link>
+        </div>
+      </div>
     );
   }
 
@@ -90,6 +122,32 @@ export function ContactForm({ defaultSubject }: { defaultSubject?: ContactSubjec
         required
         error={state.fieldErrors.email}
       />
+      {/* 自治体は電話で折り返す運用が根強い。メールだけだと確認が滞る。 */}
+      <TextField
+        id="phone"
+        label="電話番号"
+        type="tel"
+        autoComplete="tel"
+        error={state.fieldErrors.phone}
+      />
+
+      <fieldset className="block border-0 p-0">
+        <legend className="mb-2 block text-base font-medium text-ink">ご希望の連絡方法</legend>
+        <div className="flex flex-wrap gap-x-6">
+          {["メール", "電話", "どちらでも"].map((method, index) => (
+            <label key={method} className="flex min-h-12 items-center gap-2 text-base text-ink">
+              <input
+                type="radio"
+                name="contactMethod"
+                value={method}
+                defaultChecked={index === 0}
+                className="size-5 accent-ink"
+              />
+              {method}
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <label className="block" htmlFor="subject">
         <span className="mb-2 block text-base font-medium text-ink">お問い合わせ種別 *</span>
@@ -112,9 +170,7 @@ export function ContactForm({ defaultSubject }: { defaultSubject?: ContactSubjec
           ))}
         </select>
         {state.fieldErrors.subject ? (
-          <span id="subject-error" className="mt-2 block text-base text-brand-accent">
-            {state.fieldErrors.subject}
-          </span>
+          <FieldError id="subject-error">{state.fieldErrors.subject}</FieldError>
         ) : null}
       </label>
 
@@ -132,7 +188,10 @@ export function ContactForm({ defaultSubject }: { defaultSubject?: ContactSubjec
       </p>
 
       {state.status === "error" ? (
-        <p role="alert" className="text-base font-medium text-brand-accent">
+        <p
+          role="alert"
+          className="border-l-2 border-danger bg-danger-wash px-4 py-3 text-base font-medium text-danger"
+        >
           {state.message}
         </p>
       ) : null}

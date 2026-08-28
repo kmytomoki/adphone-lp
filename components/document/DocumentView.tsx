@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { PrintButton } from "@/app/document/PrintButton";
 import {
   DOCUMENT_AUDIENCES,
+  DOCUMENT_EDITION,
   documentAwards,
   documentFeatures,
   documentProblems,
@@ -43,8 +44,9 @@ export function DocumentView() {
           <PrintButton />
         </div>
 
-        <div
-          role="tablist"
+        {/* role="tablist" は使わない。中身はページ遷移するリンクで、タブの意味論
+            （同一ページ内のパネル切替）と合わないため。素のナビゲーションとして扱う。 */}
+        <nav
           aria-label="資料の読み手"
           className="grid gap-2 border border-line-soft bg-white p-2 sm:grid-cols-3"
         >
@@ -54,8 +56,7 @@ export function DocumentView() {
               <Link
                 key={item.id}
                 href={`/document?audience=${item.id}`}
-                role="tab"
-                aria-selected={selected}
+                aria-current={selected ? "page" : undefined}
                 className={cn(
                   "min-h-16 px-4 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent",
                   selected ? "bg-ink text-white" : "bg-paper text-ink hover:bg-paper-2"
@@ -65,7 +66,7 @@ export function DocumentView() {
               </Link>
             );
           })}
-        </div>
+        </nav>
       </div>
 
       <article className="mx-auto max-w-4xl border border-line-soft bg-white p-8 md:p-12 print:border-0 print:p-0">
@@ -176,7 +177,7 @@ export function DocumentView() {
 
           <Block label="次のステップ" title="導入・実証・共創のご相談">
             <p className="text-body text-ink-soft">
-              {current.label}に関する導入、実証実験、既存システムとの連携などのご相談は、サイトのお問い合わせフォームより承ります。数営業日以内に担当者よりご連絡いたします。
+              {current.label}に関する導入、実証実験、既存システムとの連携などのご相談は、サイトのお問い合わせフォームより承ります。3営業日以内に担当者よりご連絡いたします。
             </p>
             <div className="print-hide mt-5 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -195,8 +196,28 @@ export function DocumentView() {
           </Block>
         </div>
 
-        <footer className="mt-10 border-t border-line pt-4 text-micro text-ink-soft">
-          <p>ADREN 製品概要資料 ／ Rewave Technology ／ 本資料の内容は開発中の仕様であり、予告なく変更される場合があります。</p>
+        <footer className="mt-10 border-t-2 border-ink pt-4 text-micro text-ink-soft">
+          <dl className="grid gap-x-8 gap-y-1 sm:grid-cols-2">
+            <div className="flex gap-3">
+              <dt className="mono min-w-16 text-ink">資料名</dt>
+              <dd>ADREN 製品概要資料（{current.label}）</dd>
+            </div>
+            <div className="flex gap-3">
+              <dt className="mono min-w-16 text-ink">版</dt>
+              <dd>{DOCUMENT_EDITION.edition}</dd>
+            </div>
+            <div className="flex gap-3">
+              <dt className="mono min-w-16 text-ink">発行</dt>
+              <dd>{DOCUMENT_EDITION.publisher}</dd>
+            </div>
+            <div className="flex gap-3">
+              <dt className="mono min-w-16 text-ink">最新版</dt>
+              <dd className="break-all">{DOCUMENT_EDITION.url}</dd>
+            </div>
+          </dl>
+          <p className="mt-3">
+            本資料の内容は開発中の仕様であり、予告なく変更される場合があります。
+          </p>
         </footer>
       </article>
     </>
