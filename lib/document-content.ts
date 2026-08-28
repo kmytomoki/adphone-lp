@@ -2,6 +2,19 @@ import type { ContactSubject } from "@/lib/site";
 
 export type DocumentAudience = "municipality" | "enterprise" | "partners";
 
+/**
+ * 資料の版情報。
+ *
+ * この資料は庁内・社内で印刷され回覧される前提なので、紙になった時点で
+ * 「いつ時点の情報か」「誰が出したか」「どこで最新版が読めるか」が分からなくなると
+ * 出所不明の紙になる。内容を更新したら edition を必ず上げること。
+ */
+export const DOCUMENT_EDITION = {
+  edition: "2026年8月版",
+  url: "https://adren-lp.vercel.app/document",
+  publisher: "Rewave Technology（沖縄工業高等専門学校発）",
+} as const;
+
 export const DOCUMENT_AUDIENCES: readonly {
   id: DocumentAudience;
   label: string;

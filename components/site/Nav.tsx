@@ -8,9 +8,10 @@ import { Button } from "@/components/ui/button";
 import { AUDIENCE_OPTIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+// 「ユースケース」は入れない。行き先が /usecases で「対象から探す」と重複するため、
+// 対象別の入口に一本化してある。
 const links = [
   { href: "/product", label: "製品" },
-  { href: "/usecases", label: "ユースケース" },
   { href: "/technology", label: "技術" },
   { href: "/about", label: "会社情報" },
 ];
@@ -21,6 +22,7 @@ export function Nav() {
   const [audienceOpen, setAudienceOpen] = useState(false);
   const [mobileAudienceOpen, setMobileAudienceOpen] = useState(false);
   const audienceRef = useRef<HTMLDivElement>(null);
+  const audienceButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     function onPointerDown(event: MouseEvent) {
@@ -28,8 +30,22 @@ export function Nav() {
         setAudienceOpen(false);
       }
     }
+    // Esc で閉じられないポップアップはキーボード利用者を閉じ込める。
+    // フォーカスは開いたボタンへ戻す。
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setAudienceOpen((prev) => {
+        if (prev) audienceButtonRef.current?.focus();
+        return false;
+      });
+      setOpen(false);
+    }
     document.addEventListener("mousedown", onPointerDown);
-    return () => document.removeEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, []);
 
   return (
@@ -65,9 +81,9 @@ export function Nav() {
 
           <div ref={audienceRef} className="relative">
             <button
+              ref={audienceButtonRef}
               type="button"
               aria-expanded={audienceOpen}
-              aria-haspopup="true"
               aria-controls="audience-menu"
               className={cn(
                 "link-line flex min-h-11 items-center gap-1 text-body transition-colors",
@@ -82,38 +98,36 @@ export function Nav() {
               />
             </button>
             {audienceOpen ? (
-              <div
+              // role="menu" は付けない。↑↓/Home/End のメニュー操作を実装していない以上、
+              // role だけ名乗るとスクリーンリーダーに嘘の操作方法を伝えることになる。
+              // 素のリンクリストなら支援技術が正しく扱う。
+              <ul
                 id="audience-menu"
-                role="menu"
-                className="absolute top-full left-0 z-50 mt-2 w-80 border border-line-soft bg-white shadow-[8px_8px_0_0_rgba(26,31,46,0.06)]"
+                className="absolute top-full left-0 z-50 mt-2 w-88 border border-line-soft bg-white shadow-[8px_8px_0_0_rgba(26,31,46,0.06)]"
               >
                 {AUDIENCE_OPTIONS.map((audience) => (
-                  <Link
-                    key={audience.subject}
-                    href={audience.usecasesHref}
-                    role="menuitem"
-                    className="block border-b border-line-soft p-4 transition-colors hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-accent"
-                    onClick={() => setAudienceOpen(false)}
-                  >
-                    <span className="mincho block text-lg text-ink">{audience.label}</span>
-                    <span className="mt-1 block text-base leading-7 text-ink-soft">{audience.description}</span>
-                  </Link>
+                  <li key={audience.subject} className="border-b border-line-soft p-4 last:border-b-0">
+                    <p className="mincho text-lg text-ink">{audience.label}</p>
+                    <p className="mt-1 text-base leading-7 text-ink-soft">{audience.description}</p>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-5">
+                      <Link
+                        href={audience.usecasesHref}
+                        className="flex min-h-11 items-center text-base text-brand-accent underline underline-offset-4 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent"
+                        onClick={() => setAudienceOpen(false)}
+                      >
+                        活用例を見る
+                      </Link>
+                      <Link
+                        href={`/document?audience=${audience.documentAudience}`}
+                        className="flex min-h-11 items-center text-base text-brand-accent underline underline-offset-4 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent"
+                        onClick={() => setAudienceOpen(false)}
+                      >
+                        資料を読む
+                      </Link>
+                    </div>
+                  </li>
                 ))}
-                <div className="border-t border-line-soft px-4 py-2">
-                  <p className="mono mb-2 text-micro tracking-[0.15em] text-ink-soft">資料</p>
-                  {AUDIENCE_OPTIONS.map((audience) => (
-                    <Link
-                      key={`doc-${audience.subject}`}
-                      href={`/document?audience=${audience.documentAudience}`}
-                      role="menuitem"
-                      className="block border-b border-line-soft py-3 last:border-b-0 hover:text-brand-accent"
-                      onClick={() => setAudienceOpen(false)}
-                    >
-                      <span className="text-base text-ink">{audience.label}向け資料</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+              </ul>
             ) : null}
           </div>
 
@@ -184,30 +198,30 @@ export function Nav() {
               />
             </button>
             {mobileAudienceOpen ? (
-              <div id="mobile-audience-menu" className="border-b border-line-soft bg-paper-2 px-4 py-2">
+              <ul id="mobile-audience-menu" className="border-b border-line-soft bg-paper-2 px-4 py-2">
                 {AUDIENCE_OPTIONS.map((audience) => (
-                  <Link
-                    key={audience.subject}
-                    href={audience.usecasesHref}
-                    className="block border-b border-line-soft py-3"
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="mincho block text-lg">{audience.label}</span>
-                    <span className="mt-0.5 block text-base leading-7 text-ink-soft">{audience.description}</span>
-                  </Link>
+                  <li key={audience.subject} className="border-b border-line-soft py-3 last:border-b-0">
+                    <p className="mincho text-lg">{audience.label}</p>
+                    <p className="mt-0.5 text-base leading-7 text-ink-soft">{audience.description}</p>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-5">
+                      <Link
+                        href={audience.usecasesHref}
+                        className="flex min-h-11 items-center text-base text-brand-accent underline underline-offset-4"
+                        onClick={() => setOpen(false)}
+                      >
+                        活用例を見る
+                      </Link>
+                      <Link
+                        href={`/document?audience=${audience.documentAudience}`}
+                        className="flex min-h-11 items-center text-base text-brand-accent underline underline-offset-4"
+                        onClick={() => setOpen(false)}
+                      >
+                        資料を読む
+                      </Link>
+                    </div>
+                  </li>
                 ))}
-                <p className="mono mb-2 mt-3 text-micro tracking-[0.15em] text-ink-soft">資料</p>
-                {AUDIENCE_OPTIONS.map((audience) => (
-                  <Link
-                    key={`mobile-doc-${audience.subject}`}
-                    href={`/document?audience=${audience.documentAudience}`}
-                    className="block border-b border-line-soft py-3 last:border-b-0"
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="text-base text-ink">{audience.label}向け資料</span>
-                  </Link>
-                ))}
-              </div>
+              </ul>
             ) : null}
 
             {links.slice(1).map((link) => (

@@ -23,6 +23,8 @@ export async function submitContact(
   const name = text(formData, "name");
   const department = text(formData, "department");
   const email = text(formData, "email");
+  const phone = text(formData, "phone");
+  const contactMethod = text(formData, "contactMethod");
   const subject = text(formData, "subject");
   const message = text(formData, "message");
 
@@ -31,6 +33,10 @@ export async function submitContact(
   if (!name) fieldErrors.name = "ご担当者氏名を入力してください。";
   if (!email) fieldErrors.email = "メールアドレスを入力してください。";
   else if (!EMAIL_PATTERN.test(email)) fieldErrors.email = "メールアドレスの形式が正しくありません。";
+  // 電話での折り返しを希望しているのに番号が無いと、こちらから連絡する手段が無くなる。
+  if (contactMethod === "電話" && !phone) {
+    fieldErrors.phone = "電話での連絡をご希望の場合は、電話番号を入力してください。";
+  }
   if (!CONTACT_SUBJECTS.includes(subject as (typeof CONTACT_SUBJECTS)[number])) {
     fieldErrors.subject = "お問い合わせ種別を選択してください。";
   }
@@ -60,6 +66,8 @@ export async function submitContact(
         name,
         department: department || "(未記入)",
         email,
+        phone: phone || "(未記入)",
+        contactMethod: contactMethod || "(未選択)",
         subject,
         message: message || "(未記入)",
         _subject: `[サイト経由] ${subject} / ${organization}`,
@@ -85,7 +93,7 @@ export async function submitContact(
 
   return {
     status: "success",
-    message: "お問い合わせを受け付けました。担当者より数営業日以内にご連絡いたします。",
+    message: "お問い合わせを受け付けました。担当者より3営業日以内にご連絡いたします。",
     fieldErrors: {},
   };
 }

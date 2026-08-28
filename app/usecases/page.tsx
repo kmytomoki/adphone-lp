@@ -127,18 +127,22 @@ export default function UseCasesPage() {
           {municipalityScenarios.map((item, index) => (
             <article
               key={item.title}
-              className="hover-card grid gap-6 border border-line-soft bg-white p-6 md:grid-cols-2 md:p-8"
+              className="hover-card hover-card-quiet grid gap-6 border border-line-soft bg-white p-6 md:grid-cols-2 md:p-8"
             >
               <div className={index % 2 === 0 ? "order-1" : "order-2 md:order-1"}>
-                <h3 className="mincho mb-4 text-3xl">{item.title}</h3>                <div className="space-y-3">
+                <h3 className="mincho mb-4 text-3xl">{item.title}</h3>
+                <div className="space-y-3">
                   <div className="border-l-2 border-ink bg-paper-2 p-3">
-                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">課題</p>                    <p className="text-body text-ink-soft">{item.problem}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">課題</p>
+                    <p className="text-compact text-ink-soft">{item.problem}</p>
                   </div>
                   <div className="border-l-2 border-brand-accent bg-paper p-3">
-                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">解決</p>                    <p className="text-body text-ink-soft">{item.solution}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">解決</p>
+                    <p className="text-compact text-ink-soft">{item.solution}</p>
                   </div>
                   <div className="border-l-2 border-line bg-white p-3">
-                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">効果</p>                    <p className="text-body text-ink-soft">{item.effect}</p>
+                    <p className="mono mb-1 text-micro tracking-[0.15em] text-ink-soft">効果</p>
+                    <p className="text-compact text-ink-soft">{item.effect}</p>
                   </div>
                 </div>
               </div>
@@ -177,18 +181,19 @@ export default function UseCasesPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {enterpriseScenarios.map((item) => (
               <article key={item.title} className="border border-line-soft bg-white p-6">
-                <h3 className="mincho text-2xl">{item.title}</h3>                <dl className="mt-5 space-y-4">
+                <h3 className="mincho text-2xl">{item.title}</h3>
+                <dl className="mt-5 space-y-4">
                   <div>
                     <dt className="text-base font-medium text-ink">通信断時の課題</dt>
-                    <dd className="mt-1 text-body text-ink-soft">{item.problem}</dd>
+                    <dd className="mt-1 text-compact text-ink-soft">{item.problem}</dd>
                   </div>
                   <div className="border-l-2 border-brand-accent bg-paper p-4">
                     <dt className="text-base font-medium text-ink">想定する対応</dt>
-                    <dd className="mt-1 text-body text-ink-soft">{item.solution}</dd>
+                    <dd className="mt-1 text-compact text-ink-soft">{item.solution}</dd>
                   </div>
                   <div>
                     <dt className="text-base font-medium text-ink">期待する効果</dt>
-                    <dd className="mt-1 text-body text-ink-soft">{item.effect}</dd>
+                    <dd className="mt-1 text-compact text-ink-soft">{item.effect}</dd>
                   </div>
                 </dl>
               </article>
@@ -215,7 +220,8 @@ export default function UseCasesPage() {
           <div className="mt-8 grid gap-px border border-line bg-line md:grid-cols-3">
             {partnerScenarios.map((item) => (
               <article key={item.title} className="bg-white p-7">
-                <h3 className="mincho text-2xl">{item.title}</h3>                <p className="mt-3 text-body text-ink-soft">{item.body}</p>
+                <h3 className="mincho text-2xl">{item.title}</h3>
+                <p className="mt-3 text-compact text-ink-soft">{item.body}</p>
               </article>
             ))}
           </div>

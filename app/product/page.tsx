@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { FinalCta } from "@/components/site/FinalCta";
 import { PageHero } from "@/components/site/PageHero";
 
@@ -9,13 +10,22 @@ export const metadata: Metadata = {
     "スマートフォン、BLE、LoRaを組み合わせ、通信断時にも安否・物資・危険情報を端末間で届けるADREN（アドレン）の製品概要です。",
 };
 
-const specs = [
-  ["通信方式", "LoRa (920MHz帯 LPWA) + BLE ハイブリッド"],
-  ["通信距離", "1km以上 (屋外実験時) / 3km以上 (シミュレーション値)"],
-  ["低消費電力", "LPWAベースで小容量データを長距離伝送"],
-  ["セキュリティ (LPWA区間)", "X25519 (ECDH) で鍵交換 / AES-256-GCM で暗号化 / Ed25519 で署名"],
-  ["データ圧縮", "マルチモーダルAI処理により最大 1/1000 (条件により変動)"],
-  ["対応端末", "スマートフォン (BLE接続), iOS / Android"],
+// 「通信距離」は誤読されやすい行。1台あたりの数字だけを見た読み手は、
+// 自分の市域と比べて「足りない」と判断して離脱する。note で中継の話に繋ぐ。
+const specs: readonly { key: string; value: string; note?: string }[] = [
+  { key: "通信方式", value: "LoRa (920MHz帯 LPWA) + BLE ハイブリッド" },
+  {
+    key: "通信距離",
+    value: "1km以上 (屋外実験時) / 3km以上 (シミュレーション値)",
+    note: "いずれも1ノードあたりの距離です。ノード同士が中継するため、到達範囲は配備台数に応じて広がります。",
+  },
+  { key: "低消費電力", value: "LPWAベースで小容量データを長距離伝送" },
+  {
+    key: "セキュリティ (LPWA区間)",
+    value: "X25519 (ECDH) で鍵交換 / AES-256-GCM で暗号化 / Ed25519 で署名",
+  },
+  { key: "データ圧縮", value: "マルチモーダルAI処理により最大 1/1000 (条件により変動)" },
+  { key: "対応端末", value: "スマートフォン (BLE接続), iOS / Android" },
 ];
 
 const productFeatures = [
@@ -50,7 +60,8 @@ export default function ProductPage() {
 
       <section className="px-6 py-14 md:px-12">
         <div className="frame-ticks mx-auto max-w-6xl border border-line-soft bg-white p-8 text-center md:p-16">
-          <p className="mono mb-3 text-micro tracking-[0.2em] text-ink-soft">製品イメージ</p>          <p className="mx-auto mb-6 max-w-3xl text-body text-ink-soft">
+          <p className="mono mb-3 text-micro tracking-[0.2em] text-ink-soft">製品イメージ</p>
+          <p className="mx-auto mb-6 max-w-3xl text-body text-ink-soft">
             スマートフォンにADRENを接続し、近距離はBLE、遠距離はLoRaで中継。通信が切れた現場でも、手元のスマートフォンを災害時の通信端末として活用できます。
           </p>
           <div className="relative mx-auto aspect-[3/2] w-full max-w-4xl overflow-hidden border border-line-soft bg-paper">
@@ -105,16 +116,27 @@ export default function ProductPage() {
         <div className="mx-auto max-w-6xl">
           <h2 className="mono mb-4 text-micro tracking-[0.2em] text-ink-soft uppercase">仕様</h2>
           <div className="frame-ticks border border-line">
-            {specs.map(([key, value]) => (
+            {specs.map((spec) => (
               <div
-                key={key}
+                key={spec.key}
                 className="group grid border-b border-line-soft last:border-b-0 md:grid-cols-[220px_1fr]"
               >
                 <div className="bg-paper-2 px-4 py-3 text-body text-ink transition-colors duration-200 group-hover:bg-line-soft">
-                  {key}
+                  {spec.key}
                 </div>
-                <div className="bg-white px-4 py-3 text-body text-ink-soft transition-colors duration-200 group-hover:bg-paper group-hover:text-ink">
-                  {value}
+                <div className="bg-white px-4 py-3 text-compact text-ink-soft transition-colors duration-200 group-hover:bg-paper group-hover:text-ink">
+                  {spec.value}
+                  {spec.note ? (
+                    <span className="mt-1 block text-base leading-7 text-ink-soft">
+                      {spec.note}
+                      <Link
+                        href="/#mesh"
+                        className="ml-1 text-brand-accent underline underline-offset-4 hover:text-ink"
+                      >
+                        到達範囲の説明を見る
+                      </Link>
+                    </span>
+                  ) : null}
                 </div>
               </div>
             ))}

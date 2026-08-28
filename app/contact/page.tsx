@@ -4,6 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { PrimaryButton } from "@/components/site/Buttons";
 import {
   AUDIENCE_OPTIONS,
+  CONTACT_STATUS,
   CONTACT_SUBJECTS,
   contactHref,
   publicContact,
@@ -33,7 +34,7 @@ const entryPoints = [
   {
     eyebrow: "担当者と検討する",
     title: "担当者に相談したい",
-    body: "県・自治体への導入、企業のBCP、既存防災システムとの連携、共同実証などの具体的なご相談はこちら。数営業日以内に担当者よりご連絡いたします。",
+    body: "県・自治体への導入、企業のBCP、既存防災システムとの連携、共同実証などの具体的なご相談はこちら。3営業日以内に担当者よりご連絡いたします。",
     cta: "相談フォームへ",
     href: "#contact-form",
     highlighted: false,
@@ -69,6 +70,15 @@ export default async function ContactPage({
         title="導入検討・技術相談の窓口"
         lede="県・自治体、企業の防災・BCP、防災事業の共創まで。資料を読む導線と、担当者へ相談する導線を分けています。"
       />
+
+      {CONTACT_STATUS && details.length === 0 ? (
+        <section className="px-6 pt-14 md:px-12">
+          <div className="mx-auto max-w-6xl border-l-2 border-notice bg-notice-wash p-6">
+            <p className="text-base font-medium text-ink">{CONTACT_STATUS.headline}</p>
+            <p className="mt-2 max-w-3xl text-compact text-ink-soft">{CONTACT_STATUS.body}</p>
+          </div>
+        </section>
+      ) : null}
 
       <section className="px-6 py-14 md:px-12">
         <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-2">
