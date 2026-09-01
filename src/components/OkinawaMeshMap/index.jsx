@@ -491,17 +491,6 @@ export default function OkinawaMeshMap({
     [height, nearestNodeId, reducedMotion, startPropagationFrom, width]
   );
 
-  const replay = useCallback(() => {
-    if (reducedMotion) return;
-    setBaseDown(true);
-    setShowOutageText(true);
-    const t = setTimeout(() => {
-      startFromChainEnd();
-      setShowOutageText(false);
-    }, 600);
-    pendingTimersRef.current.push(t);
-  }, [reducedMotion, startFromChainEnd]);
-
   const legend = [
     ["発信源", NODE_SOURCE],
     ["中継中", NODE_RELAY],
@@ -513,20 +502,11 @@ export default function OkinawaMeshMap({
     <div ref={wrapRef} className="w-full">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-base font-medium text-ink">沖縄本島 アドホックメッシュ伝搬シミュレーション</p>
+          <p className="text-base font-medium text-ink">名護市 中継シミュレーション</p>
           <p className="mono mt-1 text-micro tracking-[0.15em] text-ink-soft">
             REACHED NODES: <span ref={reachedElRef} className="text-brand-accent">0 / 0</span>
           </p>
         </div>
-        <button
-          type="button"
-          onClick={replay}
-          disabled={reducedMotion}
-          aria-disabled={reducedMotion}
-          className="min-h-11 rounded-sm border border-line px-4 py-2 text-base tracking-[0.04em] text-ink-soft transition-all duration-200 enabled:hover:-translate-y-0.5 enabled:hover:border-brand-accent enabled:hover:text-brand-accent disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          那覇市から再生
-        </button>
       </div>
       <div className="flex justify-center">
         <canvas

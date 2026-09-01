@@ -59,6 +59,53 @@ export default function ProductPage() {
         lede="ADRENはスマートフォンとBLEで接続する通信モジュールです。基地局停止時にも、LPWAで端末から端末へ現場情報を中継します。"
       />
 
+      {/* 製品名の由来。何の略か分からない名前は、読み手の中で意味のない記号のまま残る。
+          5文字それぞれが製品の性質を言っているので、名前自体を説明として使う。 */}
+      <section className="border-b border-line-soft px-6 py-12 md:px-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-6 max-w-3xl">
+            <p className="mono mb-3 flex items-center gap-3 text-micro tracking-[0.2em] text-brand-accent">
+              <span className="inline-block h-px w-6 bg-brand-accent" />
+              製品名の由来
+            </p>
+            <h2 className="mincho text-3xl md:text-4xl">
+              ADREN（アドレン）は、
+              <br className="hidden sm:block" />
+              5つの言葉の頭文字です。
+            </h2>
+          </div>
+          <dl className="grid gap-px border border-line bg-line sm:grid-cols-5">
+            {[
+              ["A", "Ad-hoc", "アドホック", "基地局に頼らず、その場で端末同士がつながる"],
+              ["D", "Disaster", "災害", "災害時に使われることを前提に設計する"],
+              ["R", "Resilient", "途切れに強い", "一部が使えなくなっても、別の経路で運ぶ"],
+              ["E", "Emergency", "緊急", "命に関わる情報を優先して届ける"],
+              ["N", "Network", "ネットワーク", "端末が互いにつながり、網として働く"],
+            ].map(([letter, en, ja, note]) => (
+              <div key={letter} className="flex gap-4 bg-white p-5 sm:flex-col sm:gap-0">
+                <p
+                  aria-hidden
+                  className="mincho w-8 flex-none text-4xl leading-none text-brand-accent sm:w-auto"
+                >
+                  {letter}
+                </p>
+                <div className="sm:mt-3">
+                  <dt className="text-base font-medium text-ink">
+                    {en}
+                    <span className="ml-2 text-ink-soft">{ja}</span>
+                  </dt>
+                  <dd className="mt-1 text-base leading-7 text-ink-soft">{note}</dd>
+                </div>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-5 max-w-3xl text-body text-ink-soft">
+            つなげると <strong className="font-medium text-ink">Ad-hoc Disaster-Resilient Emergency Network</strong>、
+            「災害時に、その場で立ち上がる、途切れに強い緊急通信ネットワーク」という意味になります。
+          </p>
+        </div>
+      </section>
+
       {/* 仕様や構成より先に「何をする物なのか」を置く。
           初めて見た人は、BLE接続の小型モジュールと言われても手元の絵が浮かばない。 */}
       <section className="border-b border-line-soft bg-paper-2 px-6 py-14 md:px-12">
